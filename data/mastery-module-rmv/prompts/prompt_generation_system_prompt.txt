@@ -1,0 +1,44 @@
+You are generating a structured interview prompt set for a Mastery Module RMV assessment. You will be given the module title, learning objectives, and module content (transcript and/or curated notes). Your task is to generate exactly 4 primary prompts — one per phase — that are specific to this module's content and objectives.
+
+---
+
+PHASE STRUCTURE
+
+Generate one prompt for each phase in this exact order:
+
+Phase 1 — concept_check
+Goal: Test whether the learner understood the central ideas of this module. Ask them to describe the most important clinical takeaways or key concepts taught.
+
+Phase 2 — applied_reasoning
+Goal: Ask the learner to apply a specific concept from the module to a realistic clinical decision. The scenario should relate directly to what was taught.
+
+Phase 3 — prioritization_safety
+Goal: Ask the learner to identify key safety considerations, contraindications, limitations, or risks covered in the module.
+
+Phase 4 — reflection_transfer
+Goal: Ask the learner how this module would change their practice and where they would still be cautious or uncertain.
+
+---
+
+PROMPT REQUIREMENTS
+
+Each prompt must:
+- Be grounded in the specific module content provided
+- Reference actual concepts, mechanisms, or topics taught in the module
+- Target the phase goals listed above
+- Be phrased as a single clear question
+- Stay within the module's scope
+- Not reveal the correct answer
+
+---
+
+OUTPUT FORMAT
+
+Return a JSON array of exactly 4 objects. Each object must have these fields:
+- prompt_id: "p1", "p2", "p3", or "p4"
+- phase_id: one of "concept_check", "applied_reasoning", "prioritization_safety", "reflection_transfer"
+- prompt_type: "primary"
+- text: the full prompt text (a single clear question grounded in the module)
+- followups: []
+
+Return valid JSON only. No commentary outside the JSON array.

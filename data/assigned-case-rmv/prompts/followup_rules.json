@@ -1,0 +1,35 @@
+{
+  "followup_rules_version": "1.0.0",
+  "product_id": "assigned_case_rmv",
+  "cap": { "max_followups_per_phase": 2, "max_total_prompts": 10 },
+  "permitted_trigger_types": [
+    { "trigger_id": "omission_safety", "label": "Safety-relevant omission", "description": "Candidate omits a finding or consideration with direct patient safety implications.", "example": "Candidate proposes analgesic escalation in a horse without ruling out a developing complication." },
+    { "trigger_id": "vague_plan", "label": "Vague management plan", "description": "Candidate states a plan but does not specify drug, dose, route, frequency, or monitoring.", "example": "Candidate says 'I would escalate pain management' without specifying what agents or monitoring." },
+    { "trigger_id": "unsupported_recommendation", "label": "Unsupported recommendation", "description": "Candidate makes a clinical recommendation without providing any reasoning or justification.", "example": "Candidate recommends a specific drug without explaining why it is preferred." },
+    { "trigger_id": "prioritization_failure", "label": "Prioritization failure", "description": "Candidate addresses lower-urgency concerns before higher-urgency ones without explanation.", "example": "Candidate proposes a full diagnostic workup before addressing obvious acute pain." },
+    { "trigger_id": "contradictory_data_ignored", "label": "Contradictory or contradicted data ignored", "description": "Candidate ignores a finding in the case that contradicts or complicates their stated conclusion.", "example": "Candidate concludes no complication is present without acknowledging the mildly elevated lactate." },
+    { "trigger_id": "weak_defense", "label": "Weak defense of choice", "description": "Candidate states a conclusion but cannot explain it when directly challenged.", "example": "Candidate cannot explain why they chose one analgesic agent over another when asked." }
+  ],
+  "prohibited_followup_reasons": [
+    { "reason": "Teaching the correct answer", "description": "Follow-up should not be used to lead the candidate toward the expected response." },
+    { "reason": "Expanding case scope", "description": "Follow-up should not introduce new clinical scenarios, new patients, or hypotheticals not in the case." },
+    { "reason": "Trivia testing", "description": "Follow-up should not test memorized facts disconnected from the clinical reasoning task." },
+    { "reason": "Style or vocabulary correction", "description": "Follow-up should not prompt the candidate to rephrase or restate in more formal language." },
+    { "reason": "Seeking completeness for its own sake", "description": "Follow-up should not be used to get every possible answer if the candidate has already demonstrated adequate reasoning." },
+    { "reason": "Probing a domain already fully assessed", "description": "Do not revisit a domain where the candidate has already demonstrated clear competence." }
+  ],
+  "followup_decision_flowchart": {
+    "step_1": "Has the candidate's response triggered one or more conditions listed in the case prompts.json?",
+    "step_2": "If yes: has this phase already used 2 follow-ups?",
+    "step_3": "If no to step_2: has the total prompt count across all phases reached 10?",
+    "step_4": "If no to step_3: is the follow-up from the prohibited list?",
+    "step_5": "If no to step_4: issue the follow-up. Otherwise, proceed to next phase primary prompt."
+  },
+  "followup_language_principles": [
+    "Ask one focused question, not a list of sub-questions",
+    "Do not signal whether the candidate is on the right or wrong track",
+    "Do not use leading language such as 'are you sure' or 'have you considered'",
+    "Use neutral framing: 'Walk me through your reasoning on X' or 'What is the basis for that recommendation?'",
+    "If the trigger is a safety omission, name the omission directly and ask the candidate to address it: 'You have not addressed [X]. How does that factor into your plan?'"
+  ]
+}

@@ -1,0 +1,24 @@
+{
+  "product_id": "mastery_module_rmv",
+  "followup_rules_version": "1.0.0",
+  "cap": { "max_followups_per_phase": 2, "max_total_prompts": 10 },
+  "permitted_trigger_types": [
+    { "trigger_id": "vague_generic_answer", "label": "Vague or generic answer not demonstrating module mastery", "description": "Learner gives a correct-sounding but generic answer not grounded in the module content." },
+    { "trigger_id": "cannot_apply", "label": "Cannot apply concept to clinical scenario", "description": "Learner understands the concept abstractly but cannot translate it into practice." },
+    { "trigger_id": "missing_safety", "label": "Misses a major safety consideration from the module", "description": "Learner omits a contraindication, risk, or limitation explicitly covered in the module." },
+    { "trigger_id": "unsupported_conclusion", "label": "States conclusion without justification", "description": "Learner makes a recommendation without explaining why, using module-based reasoning." },
+    { "trigger_id": "misunderstands_objective", "label": "Misunderstands a central module objective", "description": "Learner's response indicates a fundamental misunderstanding of a high-priority objective." }
+  ],
+  "prohibited_followup_reasons": [
+    "Broad oral board questioning outside module scope",
+    "Trivia not covered in the module",
+    "Teaching toward the answer",
+    "Excessive probing of minor details"
+  ],
+  "followup_language_principles": [
+    "Anchor every follow-up to the module: 'Based on what was covered in this module...'",
+    "Ask one focused question",
+    "Do not signal correctness",
+    "Use neutral framing: 'Walk me through how you would apply that in practice'"
+  ]
+}

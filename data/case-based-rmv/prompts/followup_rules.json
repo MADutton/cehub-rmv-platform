@@ -1,0 +1,26 @@
+{
+  "product_id": "case_based_rmv",
+  "followup_rules_version": "1.0.0",
+  "cap": { "max_followups_per_phase": 2, "max_total_prompts": 10 },
+  "permitted_trigger_types": [
+    { "trigger_id": "generic_answer", "label": "Generic answer not anchored to submission", "description": "Candidate gives a correct but generic answer that could apply to any case, not specifically to their submission." },
+    { "trigger_id": "unexplained_decision", "label": "Cannot explain a key decision from the submission", "description": "Candidate fails to explain why a specific decision in the submission was made." },
+    { "trigger_id": "contradiction", "label": "Response contradicts the submission", "description": "Candidate's response materially conflicts with what is written in the submission." },
+    { "trigger_id": "avoids_reflection", "label": "Avoids reflection or glosses over uncertainty", "description": "Candidate gives a superficial or evasive answer when asked to reflect." },
+    { "trigger_id": "unfamiliar_with_details", "label": "Unfamiliar with patient-specific details", "description": "Candidate appears not to know specific facts from their own case." },
+    { "trigger_id": "vague_plan", "label": "Vague or unsupported recommendation", "description": "Candidate states a conclusion without linking it to the case or providing rationale." }
+  ],
+  "prohibited_followup_reasons": [
+    "Teaching the correct answer",
+    "Expanding into unrelated general knowledge",
+    "Trivia outside the submission",
+    "Stylistic or vocabulary correction",
+    "Seeking completeness for its own sake"
+  ],
+  "followup_language_principles": [
+    "Anchor every follow-up to the submission: 'In your case...' or 'Your submission states...'",
+    "Ask one focused question, not a list",
+    "Do not signal whether the candidate is right or wrong",
+    "Use neutral framing: 'Walk me through your reasoning on X in this case'"
+  ]
+}
