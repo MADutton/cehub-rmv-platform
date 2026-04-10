@@ -1,0 +1,63 @@
+{
+  "case_id": "capm_case_003",
+  "title": "Equine colic surgery: apparent recovery with subtle pain re-escalation",
+  "difficulty": "deliberately_tricky",
+  "discipline": "pain_management",
+  "species": "equine",
+  "signalment": "6-year-old Quarter Horse gelding, 520 kg",
+  "presenting_complaint": "Horse underwent exploratory laparotomy for large colon displacement 36 hours ago. The attending surgeon reports the horse is 'doing well.' The pain management consultant is asked to review after a nursing staff member notes the horse has been 'a bit quiet' since this morning.",
+  "history": [
+    "Exploratory laparotomy 36 hours ago for right dorsal displacement of the large colon; displacement was manually corrected, no resection performed",
+    "Intraoperative analgesia: xylazine, butorphanol, lidocaine CRI intraoperatively",
+    "Current postoperative protocol: flunixin meglumine 1.1 mg/kg IV q12h, butorphanol 0.02 mg/kg IV q4h PRN (last dose administered 6 hours ago, not requested since)",
+    "Passed manure twice in past 12 hours \u2014 considered a positive sign by primary team",
+    "Eating hay intermittently but not completing meals",
+    "Owner reports horse was 'not himself' this morning but has not stated anything alarming",
+    "No fever recorded on any of four temperature checks in past 24 hours",
+    "Surgeon reports 'incision looks fine' on morning rounds"
+  ],
+  "physical_exam": [
+    "Demeanor: dull and withdrawn; stands at back of stall; does not approach examiner",
+    "Heart rate: 44 bpm \u2014 within normal equine range",
+    "Respiratory rate: 16 breaths/min \u2014 normal",
+    "Temperature: 37.8\u00b0C (100.1\u00b0F) \u2014 normal",
+    "Mucous membranes: pink, moist, CRT < 2 sec",
+    "Borborygmi: reduced in all quadrants, especially right dorsal",
+    "Slight flank watching behavior noted on one occasion during exam",
+    "No pawing, no rolling, no lip-curling observed",
+    "Mild sweating over flanks and behind elbows",
+    "Abdomen: no visible distension",
+    "Nasogastric reflux: none obtained on decompression",
+    "Rectal exam: declined by primary team at this time; surgeon notes horse is 'too painful for rectal'"
+  ],
+  "diagnostics_available": [
+    "PCV: 38% \u2014 within normal limits post-op",
+    "Total protein: 5.8 g/dL \u2014 mildly low",
+    "Lactate (drawn 2 hours ago): 2.1 mmol/L \u2014 mildly elevated",
+    "Abdominal ultrasound (performed yesterday): small amount of free peritoneal fluid, considered expected post-op finding at that time",
+    "No repeat ultrasound performed today"
+  ],
+  "attachments": [],
+  "deliberate_distractors": [
+    "Normal vital signs except subtle changes",
+    "Manure passage suggests GI motility is present",
+    "Surgeon's optimistic framing ('doing well')",
+    "No fever recorded",
+    "Butorphanol not requested \u2014 could be interpreted as no pain"
+  ],
+  "case_phases": [
+    { "phase_id": "initial_assessment", "label": "Initial Assessment" },
+    { "phase_id": "diagnostic_reasoning", "label": "Diagnostic Reasoning" },
+    { "phase_id": "management_plan", "label": "Management Plan" },
+    { "phase_id": "reflection_defense", "label": "Reflection and Defense" }
+  ],
+  "disallowed_shortcuts": [
+    "Accepting surgeon's assessment of 'doing well' without independent clinical evaluation",
+    "Attributing all signs to expected post-op behavior without ruling out complication",
+    "Escalating analgesia without first determining whether a complication is driving the pain",
+    "Ignoring mildly elevated lactate as 'expected post-op finding'"
+  ],
+  "model_answer_framework": {
+    "summary": "This is the tricky case. The horse is showing subtle, easily dismissed signs of distress that do not fit the primary team's optimistic narrative. Correct approach: candidate must independently assess the horse, recognize that 'quiet' is a red flag, identify that the mildly elevated lactate + reduced borborygmi + behavioral change warrants repeat diagnostics, NOT escalate analgesia until complication is excluded, and communicate clinical concern to primary surgeon directly."
+  }
+}

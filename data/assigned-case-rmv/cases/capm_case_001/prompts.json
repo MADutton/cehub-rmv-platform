@@ -1,0 +1,53 @@
+{
+  "case_id": "capm_case_001",
+  "prompt_sequence": [
+    {
+      "prompt_id": "p1",
+      "phase_id": "initial_assessment",
+      "prompt_type": "primary",
+      "text": "You are seeing this patient on morning rounds, 24 hours post-TPLO. Based on the case information, what are your primary clinical concerns and what are your immediate priorities?",
+      "target_domains": ["problem_identification", "prioritization"],
+      "required": true,
+      "followups": [
+        { "followup_id": "p1f1", "trigger": "candidate does not distinguish expected postoperative pain from possible complication", "text": "How would you differentiate expected postoperative pain from a complication in this patient right now?" },
+        { "followup_id": "p1f2", "trigger": "candidate focuses on minor findings before addressing pain or stability", "text": "You noted several findings. Walk me through how you are sequencing your priorities and why." }
+      ]
+    },
+    {
+      "prompt_id": "p2",
+      "phase_id": "diagnostic_reasoning",
+      "prompt_type": "primary",
+      "text": "What differential explanations would you consider for this patient's apparent pain escalation at 24 hours post-TPLO, and what additional information or diagnostics, if any, would you pursue?",
+      "target_domains": ["diagnostic_reasoning", "risk_awareness"],
+      "required": true,
+      "followups": [
+        { "followup_id": "p2f1", "trigger": "candidate lists extensive diagnostics without rationale", "text": "You have listed several diagnostics. For each one, tell me what finding you expect and how it would change your management." },
+        { "followup_id": "p2f2", "trigger": "candidate does not consider implant or surgical site complication", "text": "What surgical or implant-related complications could present this way at 24 hours, and how would you assess for them?" }
+      ]
+    },
+    {
+      "prompt_id": "p3",
+      "phase_id": "management_plan",
+      "prompt_type": "primary",
+      "text": "Describe your management plan for this patient over the next 12 to 24 hours. Include your analgesic approach, any protocol modifications, and your monitoring plan.",
+      "target_domains": ["management_reasoning", "risk_awareness"],
+      "required": true,
+      "followups": [
+        { "followup_id": "p3f1", "trigger": "candidate proposes only a single analgesic agent", "text": "You have described one analgesic intervention. What is your rationale for not using a multimodal approach here?" },
+        { "followup_id": "p3f2", "trigger": "candidate proposes plan without defining reassessment checkpoints", "text": "At what point would you reassess, and what findings would indicate the plan is working versus that you need to escalate further?" }
+      ]
+    },
+    {
+      "prompt_id": "p4",
+      "phase_id": "reflection_defense",
+      "prompt_type": "primary",
+      "text": "Defend your approach. What are the major risks of your plan, what uncertainty remains in this case, and under what circumstances would you significantly change course?",
+      "target_domains": ["specialist_justification", "risk_awareness"],
+      "required": true,
+      "followups": [
+        { "followup_id": "p4f1", "trigger": "candidate identifies no risks or uncertainty", "text": "Every management plan carries tradeoffs. What are the specific risks or limitations of the approach you have described?" },
+        { "followup_id": "p4f2", "trigger": "candidate cannot articulate why their choices are superior to alternatives", "text": "A colleague suggests a different opioid agent than the one you recommended. Make the case for your choice over theirs." }
+      ]
+    }
+  ]
+}

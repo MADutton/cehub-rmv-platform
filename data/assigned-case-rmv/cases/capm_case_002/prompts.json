@@ -1,0 +1,53 @@
+{
+  "case_id": "capm_case_002",
+  "prompt_sequence": [
+    {
+      "prompt_id": "p1",
+      "phase_id": "initial_assessment",
+      "prompt_type": "primary",
+      "text": "You are seeing this cat for a pain management consultation. The owner's primary concern is quality of life. What are the key clinical problems you identify, and how do you prioritize them?",
+      "target_domains": ["problem_identification", "prioritization"],
+      "required": true,
+      "followups": [
+        { "followup_id": "p1f1", "trigger": "candidate lists CKD and hypertension but does not name chronic pain as a primary problem", "text": "You have identified several concurrent diseases. Where does pain rank in your problem list, and why?" },
+        { "followup_id": "p1f2", "trigger": "candidate does not address quality of life as a clinical endpoint", "text": "The owner says the cat is no longer doing things he used to enjoy. How does that inform your clinical priorities?" }
+      ]
+    },
+    {
+      "prompt_id": "p2",
+      "phase_id": "diagnostic_reasoning",
+      "prompt_type": "primary",
+      "text": "Meloxicam was discontinued 8 months ago due to CKD Stage 2. The cat is now significantly less mobile. Walk me through your thinking on the analgesic options in this patient, including what you would and would not consider and why.",
+      "target_domains": ["diagnostic_reasoning", "risk_awareness"],
+      "required": true,
+      "followups": [
+        { "followup_id": "p2f1", "trigger": "candidate refuses NSAID consideration entirely without engaging with risk-benefit", "text": "What is the specialist-level position on NSAID use in cats with CKD Stage 2, and how does untreated pain affect renal perfusion?" },
+        { "followup_id": "p2f2", "trigger": "candidate proposes restarting meloxicam without any monitoring or dose modification", "text": "If you were to reintroduce an NSAID in this patient, what modifications and safeguards would you build in?" }
+      ]
+    },
+    {
+      "prompt_id": "p3",
+      "phase_id": "management_plan",
+      "prompt_type": "primary",
+      "text": "Design a comprehensive pain management plan for this cat that the owner can implement at home. Include your analgesic protocol, any non-pharmacologic recommendations, and how you will monitor the plan over time.",
+      "target_domains": ["management_reasoning", "risk_awareness"],
+      "required": true,
+      "followups": [
+        { "followup_id": "p3f1", "trigger": "candidate proposes pharmacologic plan without any environmental or non-pharmacologic component", "text": "Beyond medications, what non-pharmacologic interventions are part of a specialist-level chronic feline pain management plan?" },
+        { "followup_id": "p3f2", "trigger": "candidate does not define a monitoring schedule or renal safety check", "text": "Given the concurrent CKD, what monitoring plan would you put in place, and how frequently?" }
+      ]
+    },
+    {
+      "prompt_id": "p4",
+      "phase_id": "reflection_defense",
+      "prompt_type": "primary",
+      "text": "Defend your plan. Where are the greatest risks and uncertainties? What would lead you to change course, and what would you do if this cat's renal values worsen on your protocol?",
+      "target_domains": ["specialist_justification", "risk_awareness"],
+      "required": true,
+      "followups": [
+        { "followup_id": "p4f1", "trigger": "candidate cannot articulate what worsening would look like or when to stop", "text": "Give me specific thresholds: at what creatinine level or clinical sign would you discontinue or modify your analgesic protocol?" },
+        { "followup_id": "p4f2", "trigger": "candidate cannot explain the rationale for their drug choices over alternatives", "text": "Why did you choose the analgesic agents you selected rather than alternatives? What was the basis of those decisions?" }
+      ]
+    }
+  ]
+}
