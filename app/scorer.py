@@ -1,10 +1,6 @@
 """
-Scorer module — produces a structured result JSON from a completed session transcript.
-
-Calls OpenAI with the full transcript, rubric, and scoring anchors.
-Returns a dict conforming to result_schema.json.
+Scorer module — produces structured result JSON for all three product types.
 """
-
 from __future__ import annotations
 
 import json
@@ -12,88 +8,119 @@ import re
 
 import openai
 
-from app.case_loader import get_case_detail, get_rubric, get_scoring_anchors, get_scoring_system_prompt
 from app.config import settings
+from app.loaders import assigned_case as ac_loader
+from app.loaders import case_based as cb_loader
+from app.loaders import mastery_module as mm_loader
 
 _client = openai.AsyncOpenAI(api_key=settings.openai_api_key)
 
 
+def _strip_fences(text: str) -> str:
+    text = text.strip()
+    match = re.match(r"^```(?:json)?\s*([\s\S]*?)```$", text, re.DOTALL)
+    return match.group(1).strip() if match else text
+
+
 def _format_transcript(turns: list[dict]) -> str:
-    """
-    Converts a list of turn dicts into a readable transcript string.
-    Each turn dict: {phase_id, prompt_id, is_followup, prompt_text, response_text}
-    """
     current_phase = None
     lines = []
-
     for turn in turns:
         if turn["phase_id"] != current_phase:
             current_phase = turn["phase_id"]
-            label = current_phase.replace("_", " ").title()
-            lines += [f"\n=== Phase: {label} ===\n"]
-
+            lines += [f"\n=== Phase: {current_phase.replace('_', ' ').title()} ===\n"]
         role = "EXAMINER (follow-up)" if turn["is_followup"] else "EXAMINER"
         lines.append(f"{role}: {turn['prompt_text']}")
         lines.append(f"CANDIDATE: {turn['response_text'] or '[no response recorded]'}")
         lines.append("")
-
     return "\n".join(lines)
 
 
-def _strip_markdown_fences(text: str) -> str:
-    """Remove ```json ... ``` wrappers if present."""
-    text = text.strip()
-    match = re.match(r"^```(?:json)?\s*([\s\S]*?)```$", text, re.DOTALL)
-    if match:
-        return match.group(1).strip()
-    return text
-
-
-async def score_session(
-    attempt_id: str,
-    candidate_id: str,
-    case_id: str,
-    turns: list[dict],
-    duration_minutes: float,
+async def score_assigned_case(
+    attempt_id: str, candidate_id: str, case_id: str,
+    turns: list[dict], duration_minutes: float,
 ) -> dict:
-    """
-    Scores a completed session and returns a result dict conforming to result_schema.json.
-
-    turns: list of dicts with keys phase_id, prompt_id, is_followup, prompt_text, response_text
-    """
-    scoring_prompt = get_scoring_system_prompt()
-    rubric = get_rubric()
-    anchors = get_scoring_anchors(case_id)
-    case_detail = get_case_detail(case_id)
-    transcript = _format_transcript(turns)
+    scoring_prompt = ac_loader.get_scoring_system_prompt()
+    rubric = ac_loader.get_rubric()
+    anchors = ac_loader.get_scoring_anchors(case_id)
+    case_detail = ac_loader.get_case_detail(case_id)
 
     user_message = (
-        f"## Case\n"
-        f"case_id: {case_detail['case_id']}\n"
-        f"title: {case_detail['title']}\n\n"
-        f"## Rubric\n"
-        f"{json.dumps(rubric, indent=2)}\n\n"
-        f"## Scoring Anchors\n"
-        f"{json.dumps(anchors, indent=2)}\n\n"
-        f"## Full Session Transcript\n"
-        f"{transcript}\n\n"
+        f"## Case\ncase_id: {case_detail['case_id']}\ntitle: {case_detail['title']}\n\n"
+        f"## Rubric\n{json.dumps(rubric, indent=2)}\n\n"
+        f"## Scoring Anchors\n{json.dumps(anchors, indent=2)}\n\n"
+        f"## Full Session Transcript\n{_format_transcript(turns)}\n\n"
         f"## Required Output\n"
-        f"Produce the complete result JSON.\n"
-        f'attempt_id: "{attempt_id}"\n'
-        f'candidate_id: "{candidate_id}"\n'
-        f'case_id: "{case_id}"\n'
-        f"duration_minutes: {duration_minutes}\n\n"
-        f"Output valid JSON only. No commentary outside the JSON object."
+        f'attempt_id: "{attempt_id}", candidate_id: "{candidate_id}", '
+        f'case_id: "{case_id}", duration_minutes: {duration_minutes}\n'
+        f"Output valid JSON only."
     )
 
     response = await _client.chat.completions.create(
-        model=settings.openai_model,
-        max_tokens=2000,
+        model=settings.openai_model, max_tokens=2000,
         messages=[
             {"role": "system", "content": scoring_prompt},
             {"role": "user", "content": user_message},
         ],
     )
+    return json.loads(_strip_fences(response.choices[0].message.content))
 
-    raw = _strip_markdown_fences(response.choices[0].message.content)
-    return json.loads(raw)
+
+async def score_case_based(
+    attempt_id: str, candidate_id: str, submission_id: str,
+    submission_text: str, turns: list[dict], duration_minutes: float,
+) -> dict:
+    scoring_prompt = cb_loader.get_scoring_system_prompt()
+    rubric = cb_loader.get_rubric()
+
+    user_message = (
+        f"## Candidate Submission\n{submission_text}\n\n"
+        f"## Rubric\n{json.dumps(rubric, indent=2)}\n\n"
+        f"## Full Session Transcript\n{_format_transcript(turns)}\n\n"
+        f"## Required Output\n"
+        f'attempt_id: "{attempt_id}", candidate_id: "{candidate_id}", '
+        f'submission_id: "{submission_id}", duration_minutes: {duration_minutes}\n'
+        f"Output valid JSON only."
+    )
+
+    response = await _client.chat.completions.create(
+        model=settings.openai_model, max_tokens=2000,
+        messages=[
+            {"role": "system", "content": scoring_prompt},
+            {"role": "user", "content": user_message},
+        ],
+    )
+    return json.loads(_strip_fences(response.choices[0].message.content))
+
+
+async def score_mastery_module(
+    attempt_id: str, learner_id: str, module_id: str,
+    attempt_number: int, turns: list[dict], duration_minutes: float,
+) -> dict:
+    scoring_prompt = mm_loader.get_scoring_system_prompt()
+    rubric = mm_loader.get_rubric()
+    objectives = mm_loader.get_module_objectives(module_id)
+    anchors = mm_loader.get_scoring_anchors(module_id)
+
+    user_message = (
+        f"## Module\nmodule_id: {module_id}\n"
+        f"title: {mm_loader.get_module_record(module_id)['module_title']}\n\n"
+        f"## Learning Objectives\n{json.dumps(objectives, indent=2)}\n\n"
+        f"## Scoring Anchors\n{json.dumps(anchors, indent=2)}\n\n"
+        f"## Rubric\n{json.dumps(rubric, indent=2)}\n\n"
+        f"## Full Session Transcript\n{_format_transcript(turns)}\n\n"
+        f"## Required Output\n"
+        f'attempt_id: "{attempt_id}", learner_id: "{learner_id}", '
+        f'module_id: "{module_id}", attempt_number: {attempt_number}, '
+        f"duration_minutes: {duration_minutes}\n"
+        f"Output valid JSON only."
+    )
+
+    response = await _client.chat.completions.create(
+        model=settings.openai_model, max_tokens=2000,
+        messages=[
+            {"role": "system", "content": scoring_prompt},
+            {"role": "user", "content": user_message},
+        ],
+    )
+    return json.loads(_strip_fences(response.choices[0].message.content))

@@ -10,10 +10,8 @@ from pydantic import BaseModel
 
 from app.database import Base
 
+PRODUCT_TYPES = ("assigned_case", "case_based", "mastery_module")
 
-# ---------------------------------------------------------------------------
-# SQLAlchemy ORM models
-# ---------------------------------------------------------------------------
 
 def _now() -> datetime:
     return datetime.now(timezone.utc)
@@ -23,13 +21,37 @@ def _uuid() -> str:
     return str(uuid.uuid4())
 
 
+# ---------------------------------------------------------------------------
+# ORM models
+# ---------------------------------------------------------------------------
+
+class SubmissionRecord(Base):
+    """Stores candidate-uploaded case submissions for Case-Based RMV."""
+    __tablename__ = "submissions"
+
+    id: Mapped[str] = mapped_column(String(36), primary_key=True, default=_uuid)
+    candidate_id: Mapped[str] = mapped_column(String(255), nullable=False)
+    original_filename: Mapped[str] = mapped_column(String(500), nullable=False)
+    file_type: Mapped[str] = mapped_column(String(10), nullable=False)  # pdf | docx | txt
+    extracted_text: Mapped[str] = mapped_column(Text, nullable=False)
+    created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), default=_now)
+
+    sessions: Mapped[list[SessionRecord]] = relationship(
+        "SessionRecord", back_populates="submission", foreign_keys="SessionRecord.submission_id"
+    )
+
+
 class SessionRecord(Base):
     __tablename__ = "sessions"
 
     id: Mapped[str] = mapped_column(String(36), primary_key=True, default=_uuid)
-    candidate_id: Mapped[str] = mapped_column(String(255), nullable=False)
-    case_id: Mapped[str] = mapped_column(String(100), nullable=False)
-    status: Mapped[str] = mapped_column(String(20), default="active")  # active | complete | scored
+    product_type: Mapped[str] = mapped_column(String(30), nullable=False)
+    participant_id: Mapped[str] = mapped_column(String(255), nullable=False)
+    content_id: Mapped[str] = mapped_column(String(255), nullable=False)
+    submission_id: Mapped[str | None] = mapped_column(String(36), ForeignKey("submissions.id"), nullable=True)
+    attempt_number: Mapped[int] = mapped_column(Integer, default=1)
+    status: Mapped[str] = mapped_column(String(20), default="active")
+    prompts: Mapped[list] = mapped_column(JSON, nullable=False)
     state: Mapped[dict] = mapped_column(JSON, nullable=False)
     created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), default=_now)
     completed_at: Mapped[datetime | None] = mapped_column(DateTime(timezone=True), nullable=True)
@@ -39,6 +61,9 @@ class SessionRecord(Base):
     )
     result: Mapped[ResultRecord | None] = relationship(
         "ResultRecord", back_populates="session", uselist=False
+    )
+    submission: Mapped[SubmissionRecord | None] = relationship(
+        "SubmissionRecord", back_populates="sessions", foreign_keys=[submission_id]
     )
 
 
@@ -62,9 +87,7 @@ class ResultRecord(Base):
     __tablename__ = "results"
 
     id: Mapped[str] = mapped_column(String(36), primary_key=True, default=_uuid)
-    session_id: Mapped[str] = mapped_column(
-        String(36), ForeignKey("sessions.id"), unique=True, nullable=False
-    )
+    session_id: Mapped[str] = mapped_column(String(36), ForeignKey("sessions.id"), unique=True, nullable=False)
     result_data: Mapped[dict] = mapped_column(JSON, nullable=False)
     created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), default=_now)
 
@@ -72,19 +95,31 @@ class ResultRecord(Base):
 
 
 # ---------------------------------------------------------------------------
-# Pydantic request / response schemas
+# Pydantic schemas
 # ---------------------------------------------------------------------------
 
-class StartSessionRequest(BaseModel):
+class UploadSubmissionResponse(BaseModel):
+    submission_id: str
     candidate_id: str
+    original_filename: str
+    file_type: str
+    char_count: int
+
+
+class StartSessionRequest(BaseModel):
+    product_type: str
+    participant_id: str
     case_id: str | None = None
+    submission_id: str | None = None
+    module_id: str | None = None
+    attempt_number: int = 1
 
 
 class StartSessionResponse(BaseModel):
     session_id: str
-    case_id: str
+    product_type: str
+    content_id: str
     opening_message: str
-    case_stem: dict[str, Any]
     first_prompt: str
     phase: str
 
@@ -103,15 +138,18 @@ class PromptResponse(BaseModel):
 
 class SessionStateResponse(BaseModel):
     session_id: str
-    candidate_id: str
-    case_id: str
+    product_type: str
+    participant_id: str
+    content_id: str
     status: str
     current_phase: str | None
     total_prompts_issued: int
+    attempt_number: int
     created_at: datetime
 
 
 class ResultResponse(BaseModel):
     session_id: str
+    product_type: str
     status: str
     result: dict[str, Any] | None = None
