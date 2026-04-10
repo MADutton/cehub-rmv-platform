@@ -5,7 +5,6 @@ from app.config import settings
 
 
 def _normalize_url(url: str) -> str:
-    """Convert Render's postgres:// URLs to SQLAlchemy async-compatible form."""
     if url.startswith("postgres://"):
         return url.replace("postgres://", "postgresql+asyncpg://", 1)
     if url.startswith("postgresql://") and "+asyncpg" not in url:

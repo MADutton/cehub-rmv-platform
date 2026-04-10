@@ -1,6 +1,6 @@
 services:
   - type: web
-    name: assigned-case-rmv
+    name: cehub-rmv-platform
     runtime: python
     buildCommand: pip install -r requirements.txt
     startCommand: uvicorn app.main:app --host 0.0.0.0 --port $PORT
@@ -9,7 +9,7 @@ services:
         sync: false
       - key: DATABASE_URL
         fromDatabase:
-          name: assigned-case-rmv-db
+          name: cehub-rmv-db
           property: connectionString
       - key: SECRET_KEY
         generateValue: true
@@ -17,7 +17,7 @@ services:
         value: gpt-4o
 
 databases:
-  - name: assigned-case-rmv-db
+  - name: cehub-rmv-db
     plan: free
-    databaseName: assigned_case_rmv
-    user: assigned_case_rmv_user
+    databaseName: cehub_rmv
+    user: cehub_rmv_user

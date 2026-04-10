@@ -2,13 +2,9 @@
 __pycache__/
 *.py[cod]
 *.pyo
-*.pyd
-*.so
-*.egg
 *.egg-info/
 dist/
 build/
-.eggs/
 
 # Virtual environments
 .venv/
@@ -22,6 +18,9 @@ env/
 *.db
 *.db-shm
 *.db-wal
+
+# Uploads (local dev)
+uploads/
 
 # IDE
 .vscode/
