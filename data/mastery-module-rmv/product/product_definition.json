@@ -1,0 +1,58 @@
+{
+  "product_id": "mastery_module_rmv",
+  "product_name": "Mastery Module RMV",
+  "product_type": "module_mastery_verification",
+  "version": "1.0.0",
+  "intended_uses": [
+    "fellowship_module_completion",
+    "ce_mastery_verification",
+    "topic_checkpoint",
+    "remediation_verification"
+  ],
+  "delivery_mode": "ai_structured_mastery_interview",
+  "response_mode": "typed_open_response",
+  "adaptive_followups": true,
+  "max_followups_per_prompt": 2,
+  "max_total_prompts": 10,
+  "target_duration_minutes": { "min": 10, "max": 25 },
+  "primary_source": "module_content",
+  "scoring_model": "domain_rubric",
+  "scoring_domains": [
+    "core_concept_understanding",
+    "clinical_application",
+    "prioritization_decision_making",
+    "justification",
+    "boundaries_uncertainty",
+    "mastery_depth"
+  ],
+  "score_per_domain": { "min": 0, "max": 5 },
+  "total_score": { "min": 0, "max": 30 },
+  "outcomes": ["mastered", "borderline_review", "not_yet_mastered"],
+  "outcome_thresholds": {
+    "mastered": { "min": 24, "max": 30 },
+    "borderline_review": { "min": 20, "max": 23 },
+    "not_yet_mastered": { "min": 0, "max": 19 }
+  },
+  "retry_policy": {
+    "immediate_retry_allowed": false,
+    "remediation_required_before_retry": true,
+    "max_attempts_per_module": 3
+  },
+  "review_policy": {
+    "mastered": "spot_audit_eligible",
+    "borderline_review": "human_review_required",
+    "not_yet_mastered": "assign_remediation_and_retry"
+  },
+  "unlock_gate": "external",
+  "examiner_rules": {
+    "ask_one_question_at_a_time": true,
+    "stay_within_module_scope": true,
+    "do_not_reveal_ideal_answers": true,
+    "do_not_tutor": true,
+    "probe_vague_generic_superficial_responses": true,
+    "score_against_rubric_not_style": true,
+    "reward_clinically_meaningful_application": true,
+    "reward_appropriate_uncertainty": true,
+    "penalize_unsafe_overconfidence": true
+  }
+}

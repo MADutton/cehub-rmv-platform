@@ -1,0 +1,16 @@
+{
+  "module_id": "capm_week03_pbm",
+  "program": "Companion Animal Pain Management Fellowship",
+  "module_title": "Photobiomodulation in Companion Animal Pain Management",
+  "module_type": "lecture_module",
+  "week": 3,
+  "estimated_duration_minutes": 50,
+  "rmv_required": true,
+  "rmv_template_id": "mastery_module_rmv_interview_v1",
+  "source_files": [
+    "transcript.txt",
+    "curated_notes.json"
+  ],
+  "status": "active",
+  "notes": "Transcript and curated_notes.json are loaded separately from CEHub.vet content pipeline."
+}

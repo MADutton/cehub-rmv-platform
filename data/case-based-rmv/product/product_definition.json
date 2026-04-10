@@ -1,0 +1,58 @@
+{
+  "product_id": "case_based_rmv",
+  "product_name": "Case-Based RMV",
+  "product_type": "submission_verification_assessment",
+  "version": "1.0.0",
+  "intended_uses": [
+    "abvp_case_summary_verification",
+    "abvp_case_report_verification",
+    "fellowship_case_portfolio_verification"
+  ],
+  "delivery_mode": "ai_structured_reflective_interview",
+  "response_mode": "typed_open_response",
+  "adaptive_followups": true,
+  "max_followups_per_prompt": 2,
+  "max_total_prompts": 10,
+  "target_duration_minutes": { "min": 20, "max": 35 },
+  "primary_source": "candidate_submission",
+  "scoring_model": "domain_rubric",
+  "scoring_domains": [
+    "case_ownership",
+    "clinical_reasoning",
+    "decision_justification",
+    "reflective_insight",
+    "consistency_with_submission",
+    "specialist_level_depth"
+  ],
+  "score_per_domain": { "min": 0, "max": 5 },
+  "total_score": { "min": 0, "max": 30 },
+  "outcomes": ["verified", "borderline_review", "not_verified"],
+  "outcome_thresholds": {
+    "verified": { "min": 24, "max": 30 },
+    "borderline_review": { "min": 20, "max": 23 },
+    "not_verified": { "min": 0, "max": 19 }
+  },
+  "automatic_human_review_triggers": [
+    "material_contradiction_with_submission",
+    "inability_to_explain_major_decisions",
+    "repeated_vague_or_noncommittal_answers",
+    "evidence_of_possible_non_ownership",
+    "major_patient_safety_reasoning_gaps"
+  ],
+  "review_policy": {
+    "verified": "spot_audit_eligible",
+    "borderline_review": "human_review_required",
+    "not_verified": "human_review_required"
+  },
+  "examiner_rules": {
+    "ask_one_question_at_a_time": true,
+    "stay_anchored_to_submission": true,
+    "do_not_reveal_ideal_answers": true,
+    "do_not_coach": true,
+    "probe_vague_inconsistent_generic_responses": true,
+    "score_against_rubric_not_style": true,
+    "reward_authentic_reflection": true,
+    "penalize_non_ownership_signals": true,
+    "flag_material_contradictions": true
+  }
+}

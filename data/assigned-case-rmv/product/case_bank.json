@@ -1,0 +1,34 @@
+{
+  "case_bank_id": "capm_assigned_cases_v1",
+  "program": "Companion Animal Pain Management Fellowship",
+  "version": "1.0.0",
+  "cases": [
+    {
+      "case_id": "capm_case_001",
+      "title": "Postoperative canine orthopedic pain escalation",
+      "species": "canine",
+      "discipline": "pain_management",
+      "difficulty": "straightforward",
+      "estimated_duration_minutes": 35,
+      "active": true
+    },
+    {
+      "case_id": "capm_case_002",
+      "title": "Feline chronic pain management with concurrent disease and drug conflict",
+      "species": "feline",
+      "discipline": "pain_management",
+      "difficulty": "moderate_ambiguity",
+      "estimated_duration_minutes": 40,
+      "active": true
+    },
+    {
+      "case_id": "capm_case_003",
+      "title": "Equine colic surgery: apparent recovery with subtle pain re-escalation",
+      "species": "equine",
+      "discipline": "pain_management",
+      "difficulty": "deliberately_tricky",
+      "estimated_duration_minutes": 40,
+      "active": true
+    }
+  ]
+}

@@ -1,0 +1,28 @@
+{
+  "rubric_id": "mastery_module_rmv_rubric_v1",
+  "product_id": "mastery_module_rmv",
+  "version": "1.0.0",
+  "domains": [
+    { "domain_id": "core_concept_understanding", "label": "Core Concept Understanding", "description": "Accurately understands the central concepts of the module.", "weight": 1 },
+    { "domain_id": "clinical_application", "label": "Clinical Application", "description": "Applies module concepts to realistic clinical decisions or scenarios.", "weight": 1 },
+    { "domain_id": "prioritization_decision_making", "label": "Prioritization and Decision-Making", "description": "Identifies what matters most and sequences actions appropriately.", "weight": 1 },
+    { "domain_id": "justification", "label": "Justification", "description": "Explains why a choice or recommendation is appropriate using module-based reasoning.", "weight": 1 },
+    { "domain_id": "boundaries_uncertainty", "label": "Boundaries and Uncertainty", "description": "Recognizes cautions, limitations, contraindications, and uncertainty.", "weight": 1 },
+    { "domain_id": "mastery_depth", "label": "Mastery Depth", "description": "Shows the level of understanding expected for successful completion of the module.", "weight": 1 }
+  ],
+  "scale": {
+    "0": { "label": "Incorrect, unsafe, or not demonstrated", "description": "Response is wrong, unsafe, or shows no engagement with module content." },
+    "1": { "label": "Major gaps", "description": "Significant deficiencies that would indicate the module was not understood." },
+    "2": { "label": "Partially demonstrated", "description": "Some correct understanding but with notable gaps. Would not pass a mastery check." },
+    "3": { "label": "Adequate mastery", "description": "Demonstrates the level of understanding expected for successful module completion." },
+    "4": { "label": "Strong mastery", "description": "Goes beyond minimum competency. Nuanced application and awareness of limits." },
+    "5": { "label": "Excellent mastery", "description": "Exceptional integration of module content. Demonstrates deep understanding and confident application." }
+  },
+  "scoring_notes": {
+    "style_excluded": true,
+    "grammar_excluded": true,
+    "stay_within_module_scope": true,
+    "appropriate_uncertainty_rewarded": true,
+    "unsafe_overconfidence_penalized": true
+  }
+}

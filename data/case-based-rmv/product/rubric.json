@@ -1,0 +1,28 @@
+{
+  "rubric_id": "case_based_rmv_rubric_v1",
+  "product_id": "case_based_rmv",
+  "version": "1.0.0",
+  "domains": [
+    { "domain_id": "case_ownership", "label": "Case Ownership", "description": "Demonstrates authentic familiarity with the submitted case and its details.", "weight": 1 },
+    { "domain_id": "clinical_reasoning", "label": "Clinical Reasoning", "description": "Explains the major diagnostic and therapeutic reasoning in a coherent and case-specific way.", "weight": 1 },
+    { "domain_id": "decision_justification", "label": "Decision Justification", "description": "Justifies key decisions described in the submission.", "weight": 1 },
+    { "domain_id": "reflective_insight", "label": "Reflective Insight", "description": "Shows thoughtful reflection on uncertainty, limitations, learning, and possible changes.", "weight": 1 },
+    { "domain_id": "consistency_with_submission", "label": "Consistency With Submission", "description": "Responses are materially aligned with the submitted case narrative.", "weight": 1 },
+    { "domain_id": "specialist_level_depth", "label": "Specialist-Level Depth", "description": "Reasoning is consistent with entry-level specialist expectations.", "weight": 1 }
+  ],
+  "scale": {
+    "0": { "label": "Clearly deficient or inconsistent", "description": "Response is unsafe, fundamentally incorrect, or materially contradicts the submission." },
+    "1": { "label": "Major concern", "description": "Significant gaps in ownership, reasoning, or consistency that raise authenticity concerns." },
+    "2": { "label": "Partially adequate", "description": "Covers some elements but with notable gaps. Would not meet entry-level specialist standard." },
+    "3": { "label": "Verified at entry-level specialist standard", "description": "Demonstrates ownership and reasoning consistent with entry-level specialist. No major omissions." },
+    "4": { "label": "Strong", "description": "Nuanced defense with authentic depth. Addresses uncertainty and alternatives." },
+    "5": { "label": "Excellent", "description": "Exceptional mastery and ownership. Reasoning is comprehensive, reflective, and fully justified." }
+  },
+  "scoring_notes": {
+    "style_excluded": true,
+    "grammar_excluded": true,
+    "contradiction_detection": true,
+    "non_ownership_signals_penalized": true,
+    "authentic_reflection_rewarded": true
+  }
+}

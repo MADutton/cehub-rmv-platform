@@ -1,0 +1,18 @@
+{
+  "module_id": "capm_week03_pbm",
+  "content_sources": {
+    "primary": [
+      { "type": "transcript", "file": "transcript.txt", "required": true },
+      { "type": "curated_notes", "file": "curated_notes.json", "required": false }
+    ],
+    "secondary": [
+      { "type": "reference_summary", "file": "references_summary.json", "required": false }
+    ]
+  },
+  "scope_rules": {
+    "stay_within_module_scope": true,
+    "allow_minor_clinical_extension": true,
+    "disallow_irrelevant_trivia": true,
+    "note": "Assessment must be grounded in this module's content. Do not ask about topics not covered in the transcript or curated notes."
+  }
+}
