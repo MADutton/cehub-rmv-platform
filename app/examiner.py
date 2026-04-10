@@ -1,8 +1,8 @@
 """
-Examiner module — handles follow-up decision logic via Claude.
+Examiner module — handles follow-up decision logic via OpenAI.
 
 The application controls the phase/prompt sequence deterministically.
-Claude's only job here is to decide whether a candidate response triggers
+The model's only job here is to decide whether a candidate response triggers
 one of the predefined follow-up conditions for the current prompt.
 """
 
@@ -10,11 +10,11 @@ from __future__ import annotations
 
 import json
 
-import anthropic
+import openai
 
 from app.config import settings
 
-_client = anthropic.AsyncAnthropic(api_key=settings.anthropic_api_key)
+_client = openai.AsyncOpenAI(api_key=settings.openai_api_key)
 
 _DECISION_SYSTEM = (
     "You are evaluating a candidate response in a structured clinical oral examination. "
@@ -59,13 +59,15 @@ async def decide_followup(
     )
 
     try:
-        response = await _client.messages.create(
-            model=settings.claude_model,
+        response = await _client.chat.completions.create(
+            model=settings.openai_model,
             max_tokens=80,
-            system=_DECISION_SYSTEM,
-            messages=[{"role": "user", "content": user_message}],
+            messages=[
+                {"role": "system", "content": _DECISION_SYSTEM},
+                {"role": "user", "content": user_message},
+            ],
         )
-        text = response.content[0].text.strip()
+        text = response.choices[0].message.content.strip()
         result = json.loads(text)
     except Exception:
         return None

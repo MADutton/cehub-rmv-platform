@@ -1,7 +1,7 @@
 """
 Scorer module — produces a structured result JSON from a completed session transcript.
 
-Calls Claude with the full transcript, rubric, and scoring anchors.
+Calls OpenAI with the full transcript, rubric, and scoring anchors.
 Returns a dict conforming to result_schema.json.
 """
 
@@ -10,12 +10,12 @@ from __future__ import annotations
 import json
 import re
 
-import anthropic
+import openai
 
 from app.case_loader import get_case_detail, get_rubric, get_scoring_anchors, get_scoring_system_prompt
 from app.config import settings
 
-_client = anthropic.AsyncAnthropic(api_key=settings.anthropic_api_key)
+_client = openai.AsyncOpenAI(api_key=settings.openai_api_key)
 
 
 def _format_transcript(turns: list[dict]) -> str:
@@ -86,12 +86,14 @@ async def score_session(
         f"Output valid JSON only. No commentary outside the JSON object."
     )
 
-    response = await _client.messages.create(
-        model=settings.claude_model,
+    response = await _client.chat.completions.create(
+        model=settings.openai_model,
         max_tokens=2000,
-        system=scoring_prompt,
-        messages=[{"role": "user", "content": user_message}],
+        messages=[
+            {"role": "system", "content": scoring_prompt},
+            {"role": "user", "content": user_message},
+        ],
     )
 
-    raw = _strip_markdown_fences(response.content[0].text)
+    raw = _strip_markdown_fences(response.choices[0].message.content)
     return json.loads(raw)
