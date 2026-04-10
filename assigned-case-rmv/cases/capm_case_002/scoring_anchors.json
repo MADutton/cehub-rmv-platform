@@ -1,0 +1,102 @@
+{
+  "case_id": "capm_case_002",
+  "anchors": {
+    "problem_identification": {
+      "high_value_elements": [
+        "Names chronic pain and reduced quality of life as the primary presenting problem",
+        "Identifies that the current situation (no analgesia) represents a pain management failure, not just a CKD management success",
+        "Recognizes concurrent CKD, hypertension, and anemia as modifiers of the pain management approach",
+        "Identifies grooming dysfunction and altered behavior as pain indicators in cats",
+        "Notes borderline blood pressure control as relevant to the management plan"
+      ],
+      "major_concerns": [
+        "Lists CKD or hypertension as the top priority without acknowledging pain as the presenting reason",
+        "Fails to identify inadequate analgesia as an active problem",
+        "Does not recognize feline-specific pain indicators (grooming, perch avoidance, reduced interaction)",
+        "Frames quality of life as secondary or irrelevant"
+      ]
+    },
+    "prioritization": {
+      "high_value_elements": [
+        "Prioritizes pain assessment and quality of life improvement as the immediate goal of the consultation",
+        "Addresses concurrent disease management (CKD, hypertension) as modifiers that inform but do not override the analgesic plan",
+        "Sequences monitoring plan appropriately given CKD risk",
+        "Balances short-term comfort with long-term renal safety in a structured way"
+      ],
+      "major_concerns": [
+        "Prioritizes renal protection over quality of life without engaging with the patient's actual presentation",
+        "Defers all pain decisions pending further diagnostics without justification",
+        "Treats all concurrent diseases as equally urgent without clinical ranking"
+      ]
+    },
+    "diagnostic_reasoning": {
+      "high_value_elements": [
+        "Interprets available diagnostics accurately (IRIS Stage 2, borderline BP, mild anemia)",
+        "Understands that current CKD stage (Stage 2) does not absolutely contraindicate all analgesic intervention",
+        "References the tension between NSAID-associated renal risk and the fact that uncontrolled pain also impairs renal perfusion",
+        "Considers gabapentin as a first-line adjunct safe in CKD cats with dose adjustment for anemia/GFR",
+        "Considers buprenorphine as appropriate for acute or breakthrough pain in cats",
+        "Recognizes that total T4 within normal range effectively rules out hyperthyroidism as contributor"
+      ],
+      "major_concerns": [
+        "Refuses to consider any NSAID without engaging with risk-benefit or specialist guidance",
+        "Proposes restarting meloxicam at previous dose without modification or monitoring",
+        "Fails to recognize gabapentin as a viable option",
+        "Does not engage with IRIS or specialist-level guidance on NSAID use in CKD Stage 2",
+        "Cannot interpret the available diagnostic data in a clinically meaningful way"
+      ]
+    },
+    "management_reasoning": {
+      "high_value_elements": [
+        "Proposes multimodal approach including at least two of: gabapentin, buprenorphine, low-dose NSAID with monitoring, or physical rehabilitation",
+        "Recommends environmental modifications (ramps, low-sided litter box, heated bed, non-slip surfaces)",
+        "Addresses owner education on pain recognition in cats",
+        "Sets clear quality of life goals with owner",
+        "Proposes structured recheck schedule with renal panel and reassessment of pain indicators",
+        "Considers nutritional support given mild weight loss and muscle wasting",
+        "Discusses return-to-grooming and activity milestones as outcome measures"
+      ],
+      "major_concerns": [
+        "Provides only one analgesic agent in a case clearly requiring multimodal management",
+        "Ignores non-pharmacologic interventions entirely",
+        "Fails to include any monitoring plan",
+        "Does not address owner compliance or home administration logistics",
+        "Recommends a drug with significant renal risk (e.g., full-dose NSAID) without a safety net"
+      ]
+    },
+    "risk_awareness": {
+      "high_value_elements": [
+        "Articulates specific renal monitoring parameters (creatinine, BUN, USG, UPC) and frequency",
+        "Defines thresholds at which analgesic protocol would be modified or discontinued",
+        "Acknowledges gabapentin sedation risk and the importance of starting low and titrating",
+        "Notes that untreated pain itself creates physiologic stress and may worsen renal perfusion",
+        "Discusses signs of analgesic inadequacy for owner to monitor at home",
+        "Acknowledges uncertainty regarding long-term outcomes in an older CKD cat"
+      ],
+      "major_concerns": [
+        "Presents no monitoring plan or safety thresholds",
+        "Does not acknowledge any risk from chosen drugs",
+        "Cannot articulate what renal deterioration would look like or when to stop",
+        "Treats the decision as straightforward when it is explicitly ambiguous",
+        "Fails to mention that untreated pain has its own physiologic costs"
+      ]
+    },
+    "specialist_justification": {
+      "high_value_elements": [
+        "Demonstrates awareness of specialist-level guidance (IVAPM, IRIS, WSAVA) on analgesic use in CKD cats",
+        "Explains why withholding all analgesia is not a defensible specialist position",
+        "Articulates the pharmacologic rationale for each chosen agent",
+        "Navigates the CKD-analgesia tension deliberately and explicitly rather than defaulting to avoidance",
+        "Considers quality of life as a primary clinical outcome, not a secondary consideration",
+        "Demonstrates nuance: there is no perfect answer here, and acknowledging that is appropriate"
+      ],
+      "major_concerns": [
+        "Defaults to 'no analgesia because CKD' without specialist-level engagement",
+        "Cannot explain drug choices pharmacologically",
+        "Does not demonstrate awareness of relevant specialist guidance",
+        "Treats the case as simpler than it is (no acknowledgment of genuine ambiguity)",
+        "Uses purely generalist reasoning without specialist framing"
+      ]
+    }
+  }
+}

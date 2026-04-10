@@ -1,0 +1,73 @@
+{
+  "case_id": "capm_case_002",
+  "title": "Feline chronic pain management with concurrent disease and drug conflict",
+  "difficulty": "moderate_ambiguity",
+  "discipline": "pain_management",
+  "species": "feline",
+  "signalment": "13-year-old male castrated Domestic Shorthair, 4.2 kg",
+  "presenting_complaint": "Declining mobility and quality of life. Owner reports the cat is no longer jumping to favorite perches and is less interactive than 6 months ago.",
+  "history": [
+    "Long-standing osteoarthritis (OA) diagnosed radiographically 18 months ago; previously on meloxicam 0.025 mg/kg PO q24h",
+    "Chronic kidney disease (CKD) Stage 2 diagnosed 8 months ago; meloxicam discontinued at that time by primary care veterinarian",
+    "Current medications: amlodipine 0.625 mg PO q24h for hypertension, benazepril 0.5 mg/kg PO q24h for CKD management",
+    "Appetite is maintained but reduced; mild weight loss of 0.3 kg over 4 months",
+    "Owner describes intermittent vocalization at night",
+    "No obvious lameness but crouched posture and reluctance to groom hindquarters noted",
+    "Owner willing to administer multiple medications if needed",
+    "Indoor-only, low-stress household"
+  ],
+  "physical_exam": [
+    "Body condition score: 4/9",
+    "Mild muscle mass loss over lumbar epaxial region and hindlimbs",
+    "Stiff gait; reduced extension in bilateral hip and stifle joints on passive range of motion",
+    "Lumbar spondylosis palpable on spinal exam",
+    "Heart rate: 176 bpm — within feline normal but upper range",
+    "Blood pressure: 148 mmHg systolic — borderline controlled on current amlodipine dose",
+    "Oral cavity: mild dental tartar, no active stomatitis",
+    "Coat: unkempt caudally; cat unable to reach lumbar and tail base for grooming"
+  ],
+  "diagnostics_available": [
+    "Serum creatinine: 2.1 mg/dL (IRIS CKD Stage 2)",
+    "BUN: 28 mg/dL",
+    "Phosphorus: 4.2 mg/dL — within reference range",
+    "USG: 1.018",
+    "Urinalysis: no active sediment, UPC 0.3",
+    "CBC: mild non-regenerative anemia (HCT 27%)",
+    "Total T4: 2.8 μg/dL — normal",
+    "Skeletal radiographs: bilateral hip OA (moderate), thoracolumbar spondylosis (mild to moderate), bilateral stifle OA (mild)"
+  ],
+  "attachments": [],
+  "decision_nodes": [
+    {
+      "node_id": "dn1",
+      "description": "Determine whether the risk-benefit analysis supports analgesic intervention given CKD Stage 2"
+    },
+    {
+      "node_id": "dn2",
+      "description": "Identify which analgesic modalities are appropriate, contraindicated, or require modification in this patient"
+    },
+    {
+      "node_id": "dn3",
+      "description": "Design a multimodal, CKD-safe pain management protocol with quality of life as the primary outcome"
+    },
+    {
+      "node_id": "dn4",
+      "description": "Define monitoring parameters to detect renal deterioration or inadequate analgesia over time"
+    }
+  ],
+  "case_phases": [
+    { "phase_id": "initial_assessment", "label": "Initial Assessment" },
+    { "phase_id": "diagnostic_reasoning", "label": "Diagnostic Reasoning" },
+    { "phase_id": "management_plan", "label": "Management Plan" },
+    { "phase_id": "reflection_defense", "label": "Reflection and Defense" }
+  ],
+  "disallowed_shortcuts": [
+    "Refusing all analgesic intervention because of CKD without considering risk-benefit",
+    "Restarting meloxicam at previous dose without modification or monitoring plan",
+    "Treating hypertension as resolved without rechecking given borderline current reading",
+    "Ignoring quality of life as a primary outcome measure"
+  ],
+  "model_answer_framework": {
+    "summary": "Candidate should recognize that untreated chronic pain in CKD cats is a quality of life crisis and that withholding all analgesia is not a defensible specialist position. Expected approach includes consideration of low-dose NSAID with intensive monitoring (acknowledging the IRIS/IVAPM guidance on cautious NSAID use in CKD), buprenorphine for acute pain episodes, gabapentin for chronic pain and spondylosis, environmental modifications, weight management, and consideration of physical rehabilitation. Candidate must demonstrate awareness of the CKD-analgesia tension and navigate it deliberately, not avoid it."
+  }
+}

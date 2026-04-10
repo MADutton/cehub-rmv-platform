@@ -1,0 +1,104 @@
+{
+  "case_id": "capm_case_003",
+  "anchors": {
+    "problem_identification": {
+      "high_value_elements": [
+        "Does NOT anchor on surgeon's 'doing well' framing; conducts independent clinical assessment",
+        "Identifies 'quiet and withdrawn' demeanor in an equine post-colic patient as a red flag, not reassurance",
+        "Recognizes that absence of overt colic signs (rolling, pawing) does not exclude pain or complication",
+        "Notes the combination of reduced borborygmi + mild sweating + behavioral withdrawal as a concerning cluster",
+        "Flags mildly elevated lactate (2.1 mmol/L) as requiring repeat measurement and interpretation in context",
+        "Recognizes that butorphanol 'not requested' could mean adequate control OR that horse is stoic or declining to show overt signs"
+      ],
+      "major_concerns": [
+        "Accepts surgeon's 'doing well' without independent evaluation",
+        "Interprets normal HR and temperature as ruling out a problem",
+        "Attributes manure passage as sufficient evidence of normal GI recovery",
+        "Fails to note that subtle behavioral changes in horses post-colic require explanation, not dismissal"
+      ]
+    },
+    "prioritization": {
+      "high_value_elements": [
+        "Prioritizes ruling out a surgical complication before adjusting analgesia",
+        "Treats this as a diagnostic problem before a pain management problem",
+        "Immediately seeks repeat lactate and abdominal ultrasound as highest-yield next steps",
+        "Recognizes that time is a critical variable — a deteriorating post-colic horse can crash rapidly",
+        "Places professional communication with primary team as a simultaneous priority"
+      ],
+      "major_concerns": [
+        "Immediately escalates analgesia without ruling out complication",
+        "Treats the case as routine pain optimization when the primary concern is whether a complication is developing",
+        "Delays any action by deferring entirely to surgeon",
+        "Does not recognize urgency implied by the clinical picture"
+      ]
+    },
+    "diagnostic_reasoning": {
+      "high_value_elements": [
+        "Includes re-displacement, colitis, ileus, or early ischemia in differentials",
+        "Requests repeat abdominal ultrasound to reassess peritoneal fluid (volume change, echogenicity)",
+        "Requests repeat lactate to establish trend — a single mildly elevated value is less informative than a trend",
+        "Considers rectal exam despite primary team's previous reluctance, noting its critical value in post-colic assessment",
+        "Does not dismiss mildly low total protein as insignificant in the context of post-operative colic recovery",
+        "Uses available data (lactate, borborygmi, behavior) to build a clinical argument, not dismiss it"
+      ],
+      "major_concerns": [
+        "Does not include serious complications in the differential",
+        "Dismisses mildly elevated lactate as 'expected post-op'",
+        "Does not request repeat ultrasound when original was performed the day before",
+        "Proposes analgesia adjustment as the primary diagnostic maneuver",
+        "Cannot articulate what diagnostics would change their management"
+      ]
+    },
+    "management_reasoning": {
+      "high_value_elements": [
+        "Explicitly defers analgesia escalation until complication is excluded",
+        "Proposes a structured 6-hour monitoring plan with defined reassessment checkpoints",
+        "Communicates concern to primary surgeon collegially but directly",
+        "Has a clear escalation plan if repeat diagnostics confirm a complication (immediate surgical re-evaluation)",
+        "Defines what analgesia escalation would look like IF complication is ruled out",
+        "Addresses the role of walking, GI monitoring, and nursing observation in equine post-colic recovery"
+      ],
+      "major_concerns": [
+        "Escalates analgesia without ruling out complication first",
+        "Proposes no structured monitoring plan",
+        "Defers entirely to surgeon without advocating for the patient",
+        "Has no escalation pathway if the clinical picture worsens",
+        "Cannot distinguish between managing pain and masking a diagnostic signal"
+      ]
+    },
+    "risk_awareness": {
+      "high_value_elements": [
+        "Explicitly names the risk: escalating analgesia in a horse with an undetected complication could mask the pain signal and delay re-operation",
+        "Recognizes the time-sensitive nature of equine colic complications (hours matter, not days)",
+        "Identifies lactate trend as a key safety parameter",
+        "Acknowledges professional risk: disagreeing with primary surgeon requires clear clinical justification and documentation",
+        "Notes that stoicism or atypical pain expression in some horses can lead to delayed recognition",
+        "Identifies the scenario in which they would immediately escalate to emergency surgical team notification"
+      ],
+      "major_concerns": [
+        "Does not identify the risk of masking pain with analgesia when a complication may be present",
+        "Treats elevated lactate as trivial without tracking it",
+        "Does not recognize urgency of possible re-displacement in terms of patient survival",
+        "Has no plan for professional disagreement scenario",
+        "Cannot define when they would override 'watchful waiting' and demand immediate action"
+      ]
+    },
+    "specialist_justification": {
+      "high_value_elements": [
+        "Articulates why this case is harder than it appears — the distractors (normal HR, manure passage, surgeon optimism) are deliberately misleading",
+        "Demonstrates specialist-level reasoning: subtle signs in post-colic horses are red flags, not reassurance",
+        "Can explain the clinical logic of not escalating analgesia when a diagnostic signal may be present",
+        "Navigates the professional disagreement with the primary surgeon in a principled and patient-centered way",
+        "Demonstrates understanding of equine-specific pain expression and the limits of vital signs as pain indicators in horses",
+        "Can articulate what outcome they are trying to prevent and why their approach is designed to prevent it"
+      ],
+      "major_concerns": [
+        "Cannot explain what makes this case tricky or what the distractors are designed to do",
+        "Uses generalist reasoning without equine or specialist-level framing",
+        "Cannot defend the decision to hold analgesia escalation",
+        "Cannot navigate the professional disagreement scenario with any clinical substance",
+        "Treated this as a straightforward pain optimization case without recognizing the embedded diagnostic problem"
+      ]
+    }
+  }
+}

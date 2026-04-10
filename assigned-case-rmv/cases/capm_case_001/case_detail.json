@@ -1,0 +1,79 @@
+{
+  "case_id": "capm_case_001",
+  "title": "Postoperative canine orthopedic pain escalation",
+  "difficulty": "straightforward",
+  "discipline": "pain_management",
+  "species": "canine",
+  "signalment": "8-year-old female spayed Labrador Retriever, 32 kg",
+  "presenting_complaint": "Poor pain control 24 hours after tibial plateau leveling osteotomy (TPLO)",
+  "history": [
+    "Elective TPLO performed yesterday morning for complete cranial cruciate ligament rupture",
+    "Intraoperative analgesia: epidural morphine/bupivacaine, fentanyl CRI intraoperatively",
+    "Current postoperative protocol: buprenorphine 0.02 mg/kg IV q6h, carprofen 4.4 mg/kg PO q24h started this morning",
+    "Patient reluctant to bear any weight on operated limb",
+    "Vocalizing intermittently, especially on patient handling",
+    "Panting continuously since last night",
+    "Reduced appetite; rejected breakfast",
+    "No vomiting or diarrhea reported"
+  ],
+  "physical_exam": [
+    "Temperature: 38.9°C (102.0°F) — normal",
+    "Heart rate: 118 bpm — mildly elevated",
+    "Respiratory rate: 36 breaths/min — elevated, panting pattern",
+    "Mucous membranes: pink, CRT < 2 sec",
+    "Panting at rest throughout examination",
+    "Marked discomfort on manipulation and palpation of operated limb",
+    "Surgical incision: mild swelling, no discharge, wound edges intact",
+    "Contralateral limb: mild muscle guarding noted on exam"
+  ],
+  "diagnostics_available": [
+    "CBC: within normal limits",
+    "Chemistry panel: within normal limits",
+    "Post-operative radiographs: implant in expected position, no osteotomy gap, no hardware failure"
+  ],
+  "attachments": [],
+  "decision_nodes": [
+    {
+      "node_id": "dn1",
+      "description": "Determine whether presentation represents expected postoperative pain versus a complication requiring investigation"
+    },
+    {
+      "node_id": "dn2",
+      "description": "Evaluate adequacy of current analgesic protocol and identify gaps"
+    },
+    {
+      "node_id": "dn3",
+      "description": "Design a multimodal escalation strategy appropriate for this patient"
+    },
+    {
+      "node_id": "dn4",
+      "description": "Define a monitoring and reassessment plan with clear decision thresholds"
+    }
+  ],
+  "case_phases": [
+    {
+      "phase_id": "initial_assessment",
+      "label": "Initial Assessment"
+    },
+    {
+      "phase_id": "diagnostic_reasoning",
+      "label": "Diagnostic Reasoning"
+    },
+    {
+      "phase_id": "management_plan",
+      "label": "Management Plan"
+    },
+    {
+      "phase_id": "reflection_defense",
+      "label": "Reflection and Defense"
+    }
+  ],
+  "disallowed_shortcuts": [
+    "Jumping to IV opioid infusion without first reassessing current protocol",
+    "Dismissing pain as expected without considering complication",
+    "Suggesting euthanasia without clinical justification"
+  ],
+  "model_answer_framework": {
+    "summary": "Candidate should recognize uncontrolled postoperative pain, rule out surgical complication through targeted reassessment, then escalate to a multimodal analgesic strategy including an opioid with higher efficacy (e.g., methadone or hydromorphone), consider NSAID continuation, add adjuncts (gabapentin, lidocaine or ketamine CRI), define reassessment checkpoints, and provide appropriate safety monitoring."
+  }
+}

@@ -1,0 +1,85 @@
+{
+  "case_id": "capm_case_003",
+  "prompt_sequence": [
+    {
+      "prompt_id": "p1",
+      "phase_id": "initial_assessment",
+      "prompt_type": "primary",
+      "text": "You have been asked to review this horse. The surgeon has said the horse is doing well. Based on your assessment, what are your clinical concerns, and do you agree with that characterization?",
+      "target_domains": ["problem_identification", "prioritization"],
+      "required": true,
+      "followups": [
+        {
+          "followup_id": "p1f1",
+          "trigger": "candidate accepts surgeon's framing and does not independently identify concerning signs",
+          "text": "Walk me through the specific findings from your exam. Which of those findings are consistent with a horse recovering normally, and which require further explanation?"
+        },
+        {
+          "followup_id": "p1f2",
+          "trigger": "candidate identifies subtle signs but does not articulate why they are concerning in the post-colic context",
+          "text": "You noted some subtle signs. Why are those findings specifically concerning in a horse that had large colon displacement 36 hours ago?"
+        }
+      ]
+    },
+    {
+      "prompt_id": "p2",
+      "phase_id": "diagnostic_reasoning",
+      "prompt_type": "primary",
+      "text": "You have a horse with subtle behavioral changes, reduced borborygmi, mild sweating, and a lactate of 2.1 mmol/L drawn 2 hours ago. What is your differential diagnosis for the current presentation, and what diagnostics do you want to pursue?",
+      "target_domains": ["diagnostic_reasoning", "risk_awareness"],
+      "required": true,
+      "followups": [
+        {
+          "followup_id": "p2f1",
+          "trigger": "candidate does not include re-displacement or early ischemia in differentials",
+          "text": "What are the most serious complications of large colon displacement surgery in the first 48 hours, and which of those could present this way?"
+        },
+        {
+          "followup_id": "p2f2",
+          "trigger": "candidate proposes analgesic escalation before ruling out complication",
+          "text": "Before escalating analgesia in a post-colic horse with subtle signs, what is the risk of masking pain in this context?"
+        }
+      ]
+    },
+    {
+      "prompt_id": "p3",
+      "phase_id": "management_plan",
+      "prompt_type": "primary",
+      "text": "The surgeon is satisfied with the horse and does not feel further diagnostics are needed right now. How do you proceed, and what is your management plan for this patient over the next 6 hours?",
+      "target_domains": ["management_reasoning", "risk_awareness"],
+      "required": true,
+      "followups": [
+        {
+          "followup_id": "p3f1",
+          "trigger": "candidate defers entirely to surgeon without advocating for further workup",
+          "text": "As the pain management consultant, you have independent clinical findings that concern you. What is your professional obligation in this situation, and how do you act on it?"
+        },
+        {
+          "followup_id": "p3f2",
+          "trigger": "candidate escalates analgesia without addressing the need to rule out complication first",
+          "text": "If you escalate analgesia and there is an evolving complication that this pain was signaling, what is the consequence for the patient?"
+        }
+      ]
+    },
+    {
+      "prompt_id": "p4",
+      "phase_id": "reflection_defense",
+      "prompt_type": "primary",
+      "text": "Defend your approach. What is the highest-risk decision point in this case, what uncertainty remains, and what would you do if the surgeon explicitly refuses your recommendation for repeat diagnostics?",
+      "target_domains": ["specialist_justification", "risk_awareness"],
+      "required": true,
+      "followups": [
+        {
+          "followup_id": "p4f1",
+          "trigger": "candidate cannot articulate a clear escalation pathway for the professional disagreement",
+          "text": "What channels or mechanisms would you use to escalate your concern if direct communication with the surgeon is not productive?"
+        },
+        {
+          "followup_id": "p4f2",
+          "trigger": "candidate cannot explain why this case is harder than it appears",
+          "text": "A less experienced clinician might look at this horse and say everything looks fine. What specialist-level reasoning leads you to a different conclusion?"
+        }
+      ]
+    }
+  ]
+}

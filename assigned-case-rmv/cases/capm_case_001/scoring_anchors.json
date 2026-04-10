@@ -1,0 +1,98 @@
+{
+  "case_id": "capm_case_001",
+  "anchors": {
+    "problem_identification": {
+      "high_value_elements": [
+        "Identifies uncontrolled postoperative pain as the primary active problem",
+        "Recognizes need to distinguish expected pain from a surgical complication",
+        "Notes panting and tachycardia as pain indicators, not just incidental findings",
+        "Identifies inadequacy of the current buprenorphine-based protocol as a contributing factor",
+        "Acknowledges contralateral limb guarding as a potential secondary concern"
+      ],
+      "major_concerns": [
+        "Fails to recognize severity of pain or treats vocalizing/panting as expected without assessment",
+        "Misses the possibility of a surgical complication entirely",
+        "Focuses on minor findings (e.g., reduced appetite) before addressing pain or stability",
+        "Identifies pain but makes no attempt to assess analgesic protocol adequacy"
+      ]
+    },
+    "prioritization": {
+      "high_value_elements": [
+        "Places pain control and patient comfort as the immediate first priority",
+        "Sequences reassessment of surgical site before ordering new diagnostics",
+        "Defers lower-urgency concerns until patient is stabilized and comfortable",
+        "Appropriately integrates monitoring and reassessment into the priority sequence"
+      ],
+      "major_concerns": [
+        "Delays pain intervention to pursue low-yield diagnostics first",
+        "Orders extensive workup before any analgesic escalation",
+        "Treats all findings as equally urgent without clinical ranking",
+        "Jumps to intervention without any assessment rationale"
+      ]
+    },
+    "diagnostic_reasoning": {
+      "high_value_elements": [
+        "Considers expected postoperative pain versus implant failure, compartment syndrome, or infection",
+        "Proposes focused reassessment (limb exam, wound palpation) before advanced diagnostics",
+        "Requests additional radiographs or ultrasound only with clear clinical rationale",
+        "Does not reflexively request a full diagnostic panel when targeted assessment is more appropriate",
+        "Interprets available normal CBC/chem/radiographs meaningfully in the clinical context"
+      ],
+      "major_concerns": [
+        "Pursues shotgun diagnostics without articulating what each would reveal",
+        "Fails to consider any plausible cause of pain escalation beyond 'expected soreness'",
+        "Ignores that post-op radiographs already show implant integrity",
+        "Confuses diagnostic ordering with clinical decision-making"
+      ]
+    },
+    "management_reasoning": {
+      "high_value_elements": [
+        "Transitions to a full mu-opioid agonist (e.g., methadone, hydromorphone) given buprenorphine ceiling effect",
+        "Employs multimodal analgesia: opioid + NSAID (if no contraindication) + adjunct such as gabapentin, ketamine CRI, or lidocaine CRI",
+        "Continues or appropriately adjusts NSAID with attention to gastric and renal safety",
+        "Includes a structured reassessment plan with defined frequency and pain score targets",
+        "Addresses nursing care, environmental comfort, and owner communication"
+      ],
+      "major_concerns": [
+        "Proposes only a single analgesic agent for a patient in obvious uncontrolled pain",
+        "Does not escalate opioid despite clear inadequacy of current protocol",
+        "Adds analgesics without considering interactions or cumulative risks",
+        "Provides no monitoring plan or follow-up checkpoints",
+        "Switches NSAID without rationale or adds second NSAID (contraindicated)"
+      ]
+    },
+    "risk_awareness": {
+      "high_value_elements": [
+        "Recognizes buprenorphine ceiling effect as a factor limiting current protocol",
+        "Addresses risks of opioid side effects (sedation, dysphoria, GI effects) with monitoring plan",
+        "Notes NSAID considerations in an older large-breed dog (renal function, hydration status)",
+        "Acknowledges uncertainty if clinical picture worsens despite escalation",
+        "Defines clear escalation triggers and contingency actions",
+        "Considers patient fall risk and physical therapy implications post-escalation"
+      ],
+      "major_concerns": [
+        "No attention to medication risks or side effects",
+        "Does not mention any monitoring parameters",
+        "Fails to recognize that buprenorphine is a partial agonist with limited ceiling",
+        "No contingency plan if initial escalation fails",
+        "Ignores NSAID safety considerations in this patient profile"
+      ]
+    },
+    "specialist_justification": {
+      "high_value_elements": [
+        "Explains the pharmacological rationale for opioid selection (full vs. partial agonist, receptor kinetics)",
+        "Provides guideline-consistent reasoning for multimodal approach",
+        "Articulates tradeoffs between alternative strategies without dismissing them",
+        "Demonstrates understanding of TPLO-specific pain pathways and expected recovery trajectory",
+        "Cites relevant considerations at the specialist level, not just general practitioner defaults"
+      ],
+      "major_concerns": [
+        "Provides only conclusory statements without pharmacological or clinical justification",
+        "Cannot explain why one opioid is preferred over another in this context",
+        "Reasoning is at generalist level, not specialist level",
+        "Cannot defend choices when challenged",
+        "Dismisses alternatives without engaging with their merits"
+      ]
+    }
+  }
+}

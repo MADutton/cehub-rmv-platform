@@ -1,0 +1,142 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "AssignedCaseRMVResult",
+  "description": "Schema for a completed Assigned Case RMV attempt result.",
+  "type": "object",
+  "required": [
+    "attempt_id",
+    "candidate_id",
+    "case_id",
+    "domain_scores",
+    "total_score",
+    "outcome",
+    "confidence",
+    "strengths",
+    "gaps",
+    "review_recommendation"
+  ],
+  "properties": {
+    "attempt_id": {
+      "type": "string",
+      "description": "Unique identifier for this scored attempt."
+    },
+    "candidate_id": {
+      "type": "string",
+      "description": "Identifier for the candidate being assessed."
+    },
+    "case_id": {
+      "type": "string",
+      "description": "Identifier for the case that was administered."
+    },
+    "completed_at": {
+      "type": "string",
+      "format": "date-time",
+      "description": "ISO 8601 timestamp when the session was completed."
+    },
+    "duration_minutes": {
+      "type": "number",
+      "description": "Actual elapsed time for the assessment session."
+    },
+    "domain_scores": {
+      "type": "object",
+      "description": "Per-domain scores on the 0–5 rubric scale.",
+      "properties": {
+        "problem_identification": { "type": "integer", "minimum": 0, "maximum": 5 },
+        "prioritization": { "type": "integer", "minimum": 0, "maximum": 5 },
+        "diagnostic_reasoning": { "type": "integer", "minimum": 0, "maximum": 5 },
+        "management_reasoning": { "type": "integer", "minimum": 0, "maximum": 5 },
+        "risk_awareness": { "type": "integer", "minimum": 0, "maximum": 5 },
+        "specialist_justification": { "type": "integer", "minimum": 0, "maximum": 5 }
+      },
+      "required": [
+        "problem_identification",
+        "prioritization",
+        "diagnostic_reasoning",
+        "management_reasoning",
+        "risk_awareness",
+        "specialist_justification"
+      ],
+      "additionalProperties": false
+    },
+    "total_score": {
+      "type": "integer",
+      "minimum": 0,
+      "maximum": 30,
+      "description": "Sum of all domain scores."
+    },
+    "outcome": {
+      "type": "string",
+      "enum": ["pass", "borderline", "fail"],
+      "description": "Final outcome based on total score thresholds."
+    },
+    "confidence": {
+      "type": "string",
+      "enum": ["high", "moderate", "low"],
+      "description": "AI confidence in the scored result. Low confidence triggers mandatory human review."
+    },
+    "strengths": {
+      "type": "array",
+      "items": { "type": "string" },
+      "description": "Specific candidate strengths observed during the assessment."
+    },
+    "gaps": {
+      "type": "array",
+      "items": { "type": "string" },
+      "description": "Specific gaps or deficiencies identified during the assessment."
+    },
+    "safety_flags": {
+      "type": "array",
+      "items": { "type": "string" },
+      "description": "Any responses that raised a patient safety concern. Any entry here triggers mandatory human review."
+    },
+    "review_recommendation": {
+      "type": "string",
+      "enum": ["no_review_required", "spot_audit_eligible", "human_review_required"],
+      "description": "Recommended review pathway for this result."
+    },
+    "phase_summaries": {
+      "type": "array",
+      "description": "Optional per-phase narrative summaries of candidate performance.",
+      "items": {
+        "type": "object",
+        "required": ["phase_id", "summary"],
+        "properties": {
+          "phase_id": { "type": "string" },
+          "summary": { "type": "string" }
+        }
+      }
+    }
+  },
+  "additionalProperties": false,
+  "examples": [
+    {
+      "attempt_id": "attempt_0001",
+      "candidate_id": "candidate_123",
+      "case_id": "capm_case_001",
+      "completed_at": "2026-04-10T14:32:00Z",
+      "duration_minutes": 33,
+      "domain_scores": {
+        "problem_identification": 3,
+        "prioritization": 3,
+        "diagnostic_reasoning": 2,
+        "management_reasoning": 3,
+        "risk_awareness": 2,
+        "specialist_justification": 3
+      },
+      "total_score": 16,
+      "outcome": "fail",
+      "confidence": "moderate",
+      "strengths": [
+        "Identified uncontrolled postoperative pain as primary concern",
+        "Proposed reasonable analgesic escalation"
+      ],
+      "gaps": [
+        "Limited discussion of surgical complication assessment",
+        "Insufficient monitoring plan",
+        "Justification lacked specialist depth"
+      ],
+      "safety_flags": [],
+      "review_recommendation": "human_review_required"
+    }
+  ]
+}

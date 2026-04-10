@@ -1,0 +1,59 @@
+{
+  "product_id": "assigned_case_rmv",
+  "product_name": "Assigned Case RMV",
+  "product_type": "standardized_case_competency_assessment",
+  "version": "1.0.0",
+  "intended_uses": [
+    "fellowship_final_exam",
+    "maintenance_of_fellowship",
+    "mof",
+    "mock_board_assessment"
+  ],
+  "delivery_mode": "ai_structured_interview",
+  "response_mode": "typed_open_response",
+  "adaptive_followups": true,
+  "max_followups_per_prompt": 2,
+  "max_total_prompts": 10,
+  "target_duration_minutes": {
+    "min": 25,
+    "max": 40
+  },
+  "scoring_model": "domain_rubric",
+  "scoring_domains": [
+    "problem_identification",
+    "prioritization",
+    "diagnostic_reasoning",
+    "management_reasoning",
+    "risk_awareness",
+    "specialist_justification"
+  ],
+  "score_per_domain": {
+    "min": 0,
+    "max": 5
+  },
+  "total_score": {
+    "min": 0,
+    "max": 30
+  },
+  "outcomes": ["pass", "borderline", "fail"],
+  "outcome_thresholds": {
+    "pass": { "min": 24, "max": 30 },
+    "borderline": { "min": 20, "max": 23 },
+    "fail": { "min": 0, "max": 19 }
+  },
+  "review_policy": {
+    "fail": "human_review_required",
+    "borderline": "human_review_required",
+    "pass": "spot_audit_eligible"
+  },
+  "examiner_rules": {
+    "ask_one_question_at_a_time": true,
+    "stay_within_case": true,
+    "do_not_reveal_ideal_answers": true,
+    "do_not_coach": true,
+    "followup_to_clarify_reasoning_only": true,
+    "score_against_rubric_not_style": true,
+    "reward_appropriate_uncertainty": true,
+    "penalize_unsafe_overconfidence": true
+  }
+}

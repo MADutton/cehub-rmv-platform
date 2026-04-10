@@ -1,0 +1,76 @@
+{
+  "rubric_id": "assigned_case_rmv_rubric_v1",
+  "product_id": "assigned_case_rmv",
+  "version": "1.0.0",
+  "domains": [
+    {
+      "domain_id": "problem_identification",
+      "label": "Problem Identification",
+      "description": "Identifies the key clinical problems accurately and completely.",
+      "weight": 1
+    },
+    {
+      "domain_id": "prioritization",
+      "label": "Prioritization",
+      "description": "Ranks immediate versus secondary concerns appropriately.",
+      "weight": 1
+    },
+    {
+      "domain_id": "diagnostic_reasoning",
+      "label": "Diagnostic Reasoning",
+      "description": "Selects and interprets appropriate differentials and diagnostics.",
+      "weight": 1
+    },
+    {
+      "domain_id": "management_reasoning",
+      "label": "Management Reasoning",
+      "description": "Recommends and justifies an appropriate treatment and monitoring plan.",
+      "weight": 1
+    },
+    {
+      "domain_id": "risk_awareness",
+      "label": "Risk Awareness and Safety",
+      "description": "Recognizes complications, contraindications, monitoring needs, and uncertainty.",
+      "weight": 1
+    },
+    {
+      "domain_id": "specialist_justification",
+      "label": "Specialist-Level Justification",
+      "description": "Provides reasoning consistent with entry-level specialist performance.",
+      "weight": 1
+    }
+  ],
+  "scale": {
+    "0": {
+      "label": "Unsafe or fundamentally incorrect",
+      "description": "Response contains a patient safety risk or a fundamental clinical error. Cannot be overlooked."
+    },
+    "1": {
+      "label": "Major gaps",
+      "description": "Identifies part of the problem but misses critical components. Significant deficiencies that would affect care."
+    },
+    "2": {
+      "label": "Partially adequate",
+      "description": "Covers core elements but incomplete. Gaps are notable but not dangerous. Would require significant support."
+    },
+    "3": {
+      "label": "Competent entry-level specialist",
+      "description": "Demonstrates expected reasoning for entry-level specialist. No major omissions. Safe and appropriate."
+    },
+    "4": {
+      "label": "Strong",
+      "description": "Goes beyond minimum competency. Nuanced reasoning, addresses uncertainty, anticipates complications."
+    },
+    "5": {
+      "label": "Excellent",
+      "description": "Demonstrates exceptional specialist-level depth. Reasoning is comprehensive, justified, and shows mastery."
+    }
+  },
+  "scoring_notes": {
+    "style_excluded": true,
+    "grammar_excluded": true,
+    "vocabulary_polish_excluded": true,
+    "uncertainty_recognition_rewarded": true,
+    "overconfidence_penalized": true
+  }
+}
