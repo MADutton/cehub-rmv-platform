@@ -1,0 +1,10 @@
+{
+  "template_id": "mastery_module_rmv_interview_v1",
+  "product_id": "mastery_module_rmv",
+  "phases": [
+    { "phase_id": "concept_check", "label": "Concept Check", "sequence": 1, "goals": ["Assess understanding of the module's central ideas", "Confirm accurate comprehension of key taught concepts"] },
+    { "phase_id": "applied_reasoning", "label": "Applied Reasoning", "sequence": 2, "goals": ["Apply module concepts to a realistic clinical scenario", "Justify decisions using module-based reasoning"] },
+    { "phase_id": "prioritization_safety", "label": "Prioritization and Safety", "sequence": 3, "goals": ["Identify key concerns and sequence actions appropriately", "Recognize risks, contraindications, and safety limitations"] },
+    { "phase_id": "reflection_transfer", "label": "Reflection and Transfer", "sequence": 4, "goals": ["Demonstrate how the module changes clinical practice", "Identify limits of the material and appropriate boundaries of use"] }
+  ]
+}

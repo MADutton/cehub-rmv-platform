@@ -1,0 +1,51 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "AssignedCaseRMVResult",
+  "description": "Schema for a completed Assigned Case RMV attempt result.",
+  "type": "object",
+  "required": [
+    "attempt_id", "candidate_id", "case_id", "domain_scores",
+    "total_score", "outcome", "confidence", "strengths",
+    "gaps", "review_recommendation"
+  ],
+  "properties": {
+    "attempt_id": { "type": "string" },
+    "candidate_id": { "type": "string" },
+    "case_id": { "type": "string" },
+    "completed_at": { "type": "string", "format": "date-time" },
+    "duration_minutes": { "type": "number" },
+    "domain_scores": {
+      "type": "object",
+      "properties": {
+        "problem_identification": { "type": "integer", "minimum": 0, "maximum": 5 },
+        "prioritization": { "type": "integer", "minimum": 0, "maximum": 5 },
+        "diagnostic_reasoning": { "type": "integer", "minimum": 0, "maximum": 5 },
+        "management_reasoning": { "type": "integer", "minimum": 0, "maximum": 5 },
+        "risk_awareness": { "type": "integer", "minimum": 0, "maximum": 5 },
+        "specialist_justification": { "type": "integer", "minimum": 0, "maximum": 5 }
+      },
+      "required": ["problem_identification", "prioritization", "diagnostic_reasoning",
+                   "management_reasoning", "risk_awareness", "specialist_justification"],
+      "additionalProperties": false
+    },
+    "total_score": { "type": "integer", "minimum": 0, "maximum": 30 },
+    "outcome": { "type": "string", "enum": ["pass", "borderline", "fail"] },
+    "confidence": { "type": "string", "enum": ["high", "moderate", "low"] },
+    "strengths": { "type": "array", "items": { "type": "string" } },
+    "gaps": { "type": "array", "items": { "type": "string" } },
+    "safety_flags": { "type": "array", "items": { "type": "string" } },
+    "review_recommendation": { "type": "string", "enum": ["no_review_required", "spot_audit_eligible", "human_review_required"] },
+    "phase_summaries": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["phase_id", "summary"],
+        "properties": {
+          "phase_id": { "type": "string" },
+          "summary": { "type": "string" }
+        }
+      }
+    }
+  },
+  "additionalProperties": false
+}

@@ -1,0 +1,40 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "MasteryModuleRMVResult",
+  "type": "object",
+  "required": [
+    "attempt_id", "module_id", "learner_id", "attempt_number",
+    "domain_scores", "total_score", "outcome", "confidence",
+    "strengths", "gaps", "review_recommendation"
+  ],
+  "properties": {
+    "attempt_id": { "type": "string" },
+    "module_id": { "type": "string" },
+    "learner_id": { "type": "string" },
+    "attempt_number": { "type": "integer", "minimum": 1 },
+    "completed_at": { "type": "string", "format": "date-time" },
+    "duration_minutes": { "type": "number" },
+    "domain_scores": {
+      "type": "object",
+      "properties": {
+        "core_concept_understanding": { "type": "integer", "minimum": 0, "maximum": 5 },
+        "clinical_application": { "type": "integer", "minimum": 0, "maximum": 5 },
+        "prioritization_decision_making": { "type": "integer", "minimum": 0, "maximum": 5 },
+        "justification": { "type": "integer", "minimum": 0, "maximum": 5 },
+        "boundaries_uncertainty": { "type": "integer", "minimum": 0, "maximum": 5 },
+        "mastery_depth": { "type": "integer", "minimum": 0, "maximum": 5 }
+      },
+      "required": ["core_concept_understanding", "clinical_application",
+                   "prioritization_decision_making", "justification",
+                   "boundaries_uncertainty", "mastery_depth"],
+      "additionalProperties": false
+    },
+    "total_score": { "type": "integer", "minimum": 0, "maximum": 30 },
+    "outcome": { "type": "string", "enum": ["mastered", "borderline_review", "not_yet_mastered"] },
+    "confidence": { "type": "string", "enum": ["high", "moderate", "low"] },
+    "strengths": { "type": "array", "items": { "type": "string" } },
+    "gaps": { "type": "array", "items": { "type": "string" } },
+    "review_recommendation": { "type": "string", "enum": ["spot_audit_eligible", "human_review_required", "assign_remediation_and_retry"] }
+  },
+  "additionalProperties": false
+}

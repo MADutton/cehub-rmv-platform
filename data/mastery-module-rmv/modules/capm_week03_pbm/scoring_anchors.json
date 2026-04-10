@@ -1,0 +1,76 @@
+{
+  "module_id": "capm_week03_pbm",
+  "anchors": {
+    "core_concept_understanding": {
+      "high_value_elements": [
+        "Accurately describes the proposed mechanisms of photobiomodulation as taught in the module",
+        "Identifies the major clinical takeaways without overstating the evidence base",
+        "Does not conflate photobiomodulation with other physical modalities"
+      ],
+      "major_concerns": [
+        "Misstates the mechanism or confuses it with an unrelated modality",
+        "Focuses on tangential points while missing the central teaching",
+        "Overstates evidence or presents unproven claims as established fact"
+      ]
+    },
+    "clinical_application": {
+      "high_value_elements": [
+        "Applies photobiomodulation principles to a realistic patient scenario in a clinically meaningful way",
+        "Integrates it appropriately into a multimodal plan rather than proposing it as a standalone therapy",
+        "Uses patient selection criteria taught in the module"
+      ],
+      "major_concerns": [
+        "Cannot translate module concepts into practice",
+        "Proposes photobiomodulation as a replacement for more established analgesics without justification",
+        "Gives generic answers disconnected from the module content"
+      ]
+    },
+    "prioritization_decision_making": {
+      "high_value_elements": [
+        "Distinguishes primary from secondary indications as covered in the module",
+        "Sequences photobiomodulation appropriately within a broader pain management plan",
+        "Does not over-prioritize it relative to higher-evidence interventions"
+      ],
+      "major_concerns": [
+        "Cannot prioritize appropriately within a multimodal plan",
+        "Focuses on low-value applications before addressing major pain management priorities"
+      ]
+    },
+    "justification": {
+      "high_value_elements": [
+        "Explains why photobiomodulation is or is not appropriate for a given scenario using module-based reasoning",
+        "Gives specific rationale rather than unsupported enthusiasm or dismissal",
+        "Cites module-taught reasoning rather than personal anecdote alone"
+      ],
+      "major_concerns": [
+        "Provides conclusions without explanation",
+        "Cannot justify why they would or would not use it in a given clinical scenario",
+        "Relies on anecdote or extrapolation beyond the module scope"
+      ]
+    },
+    "boundaries_uncertainty": {
+      "high_value_elements": [
+        "Recognizes contraindications taught in the module (e.g., over tumors, eyes, active infection)",
+        "Acknowledges the limits of the current evidence base",
+        "Identifies common misuse patterns as described in the module"
+      ],
+      "major_concerns": [
+        "Cannot identify safety contraindications",
+        "Overgeneralizes benefits without acknowledging evidence limitations",
+        "Misses important safety flags taught in the module"
+      ]
+    },
+    "mastery_depth": {
+      "high_value_elements": [
+        "Demonstrates meaningful integration of module content beyond surface recall",
+        "Shows understanding that goes deeper than a list of bullet points",
+        "Can discuss nuance, tradeoffs, and clinical judgment as taught"
+      ],
+      "major_concerns": [
+        "Response remains superficial or formulaic",
+        "Demonstrates only surface familiarity without depth",
+        "Cannot discuss the module's content in a clinically contextualized way"
+      ]
+    }
+  }
+}

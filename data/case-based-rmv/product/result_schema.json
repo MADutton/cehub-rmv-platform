@@ -1,0 +1,39 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "CaseBasedRMVResult",
+  "type": "object",
+  "required": [
+    "attempt_id", "submission_id", "candidate_id", "domain_scores",
+    "total_score", "outcome", "confidence", "strengths", "gaps",
+    "flags", "review_recommendation"
+  ],
+  "properties": {
+    "attempt_id": { "type": "string" },
+    "submission_id": { "type": "string" },
+    "candidate_id": { "type": "string" },
+    "completed_at": { "type": "string", "format": "date-time" },
+    "duration_minutes": { "type": "number" },
+    "domain_scores": {
+      "type": "object",
+      "properties": {
+        "case_ownership": { "type": "integer", "minimum": 0, "maximum": 5 },
+        "clinical_reasoning": { "type": "integer", "minimum": 0, "maximum": 5 },
+        "decision_justification": { "type": "integer", "minimum": 0, "maximum": 5 },
+        "reflective_insight": { "type": "integer", "minimum": 0, "maximum": 5 },
+        "consistency_with_submission": { "type": "integer", "minimum": 0, "maximum": 5 },
+        "specialist_level_depth": { "type": "integer", "minimum": 0, "maximum": 5 }
+      },
+      "required": ["case_ownership", "clinical_reasoning", "decision_justification",
+                   "reflective_insight", "consistency_with_submission", "specialist_level_depth"],
+      "additionalProperties": false
+    },
+    "total_score": { "type": "integer", "minimum": 0, "maximum": 30 },
+    "outcome": { "type": "string", "enum": ["verified", "borderline_review", "not_verified"] },
+    "confidence": { "type": "string", "enum": ["high", "moderate", "low"] },
+    "strengths": { "type": "array", "items": { "type": "string" } },
+    "gaps": { "type": "array", "items": { "type": "string" } },
+    "flags": { "type": "array", "items": { "type": "string" } },
+    "review_recommendation": { "type": "string", "enum": ["no_review_required", "spot_audit_eligible", "human_review_required", "send_to_sme_review"] }
+  },
+  "additionalProperties": false
+}

@@ -1,0 +1,10 @@
+{
+  "template_id": "case_based_rmv_interview_v1",
+  "product_id": "case_based_rmv",
+  "phases": [
+    { "phase_id": "ownership_orientation", "label": "Ownership and Orientation", "sequence": 1, "goals": ["Assess authentic familiarity with the case", "Establish candidate ownership of the submission", "Confirm accurate knowledge of patient, timeline, and decisions"] },
+    { "phase_id": "reasoning_defense", "label": "Clinical Reasoning Defense", "sequence": 2, "goals": ["Defend major clinical decisions described in the submission", "Justify prioritization and interpretation choices", "Demonstrate case-specific reasoning"] },
+    { "phase_id": "reflection", "label": "Reflection and Limitations", "sequence": 3, "goals": ["Assess reflective mastery", "Identify learning, uncertainty, and possible improvements", "Probe depth of understanding beyond the written text"] },
+    { "phase_id": "consistency_probe", "label": "Consistency and Depth Probe", "sequence": 4, "goals": ["Test alignment between verbal responses and written submission", "Probe vague, inconsistent, or generic answers", "Confirm specialist-level depth"] }
+  ]
+}
