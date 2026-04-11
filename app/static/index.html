@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="referrer" content="no-referrer" />
+  <title>CEHub RMV Assessment</title>
+  <link rel="stylesheet" href="/static/app.css" />
+</head>
+<body>
+  <main id="app" class="app">
+    <header class="app-header">
+      <h1 class="app-title">CEHub RMV Assessment</h1>
+      <div class="app-meta">
+        <span id="candidate-chip" class="chip hidden"></span>
+        <span id="product-chip" class="chip hidden"></span>
+      </div>
+    </header>
+
+    <!-- Candidate-ID prompt (shown only if not passed via URL) -->
+    <section id="view-identify" class="view hidden">
+      <div class="card">
+        <h2>Enter your participant ID</h2>
+        <p class="muted">
+          If you arrived here directly from CEHub, your ID is usually passed automatically.
+          Please enter it below to continue.
+        </p>
+        <form id="identify-form" class="form">
+          <label for="candidate-input">Participant ID</label>
+          <input id="candidate-input" name="candidate_id" type="text" required placeholder="e.g. 12345" />
+          <button type="submit" class="btn btn-primary">Continue</button>
+        </form>
+      </div>
+    </section>
+
+    <!-- Launcher: 3 product tiles -->
+    <section id="view-launcher" class="view hidden">
+      <div class="card card-wide">
+        <h2>Choose an assessment</h2>
+        <p class="muted">Select the RMV product you have been assigned.</p>
+        <div class="tiles">
+          <button class="tile" data-product="assigned_case">
+            <span class="tile-badge">Assigned Case</span>
+            <span class="tile-title">Assigned Case RMV</span>
+            <span class="tile-desc">Respond to a standardized clinical case with structured examiner prompts.</span>
+          </button>
+          <button class="tile" data-product="case_based">
+            <span class="tile-badge">Case-Based</span>
+            <span class="tile-title">Case-Based RMV</span>
+            <span class="tile-desc">Upload your own case report and answer reflective verification questions.</span>
+          </button>
+          <button class="tile" data-product="mastery_module">
+            <span class="tile-badge">Mastery</span>
+            <span class="tile-title">Mastery Module RMV</span>
+            <span class="tile-desc">Demonstrate mastery of an assigned fellowship module.</span>
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <!-- Assigned Case picker -->
+    <section id="view-ac-picker" class="view hidden">
+      <div class="card">
+        <h2>Assigned Case RMV</h2>
+        <p class="muted">Select a case to begin, or let us assign one for you.</p>
+        <div id="ac-case-list" class="list"></div>
+        <div class="actions">
+          <button id="ac-random" class="btn btn-primary">Assign a case to me</button>
+          <button data-action="back-to-launcher" class="btn btn-ghost">Back</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- Case-Based upload -->
+    <section id="view-cb-upload" class="view hidden">
+      <div class="card">
+        <h2>Case-Based RMV</h2>
+        <p class="muted">Upload the case report you wish to verify. Accepted formats: PDF, DOCX, TXT.</p>
+        <form id="cb-form" class="form">
+          <label for="cb-file">Case report file</label>
+          <input id="cb-file" type="file" accept=".pdf,.doc,.docx,.txt" required />
+          <div class="actions">
+            <button type="submit" class="btn btn-primary">Upload and begin</button>
+            <button type="button" data-action="back-to-launcher" class="btn btn-ghost">Back</button>
+          </div>
+        </form>
+        <div id="cb-upload-status" class="status hidden"></div>
+      </div>
+    </section>
+
+    <!-- Mastery Module picker -->
+    <section id="view-mm-picker" class="view hidden">
+      <div class="card">
+        <h2>Mastery Module RMV</h2>
+        <p class="muted">Select the module for your assessment.</p>
+        <div id="mm-module-list" class="list"></div>
+        <div class="actions">
+          <button data-action="back-to-launcher" class="btn btn-ghost">Back</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- Session: turn loop -->
+    <section id="view-session" class="view hidden">
+      <div class="card card-wide">
+        <div class="session-header">
+          <h2 id="session-title">Assessment in progress</h2>
+          <span id="phase-indicator" class="phase-chip"></span>
+        </div>
+
+        <div id="opening-message" class="opening"></div>
+
+        <div id="transcript" class="transcript" aria-live="polite"></div>
+
+        <form id="respond-form" class="respond-form">
+          <label for="response-input" class="sr-only">Your response</label>
+          <textarea
+            id="response-input"
+            rows="6"
+            placeholder="Type your response here. Take your time — responses are not graded for style, and you will not be told whether an answer is correct."
+            required
+          ></textarea>
+          <div class="actions">
+            <button type="submit" class="btn btn-primary" id="submit-response">Submit response</button>
+          </div>
+          <p class="muted small">
+            Once you submit, the next examiner prompt will appear above.
+            Do not close this window until the assessment is complete.
+          </p>
+        </form>
+      </div>
+    </section>
+
+    <!-- Result -->
+    <section id="view-result" class="view hidden">
+      <div class="card card-wide">
+        <h2>Assessment complete</h2>
+        <div id="result-status" class="status"></div>
+        <div id="result-body" class="result-body hidden"></div>
+        <div class="actions">
+          <button id="restart-btn" class="btn btn-ghost">Return to launcher</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- Error overlay -->
+    <section id="view-error" class="view hidden">
+      <div class="card">
+        <h2>Something went wrong</h2>
+        <p id="error-message" class="error"></p>
+        <div class="actions">
+          <button id="error-retry" class="btn btn-primary">Retry</button>
+          <button id="error-home" class="btn btn-ghost">Return to launcher</button>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <script src="/static/app.js"></script>
+</body>
+</html>

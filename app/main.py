@@ -1,12 +1,15 @@
 from __future__ import annotations
 
 import io
+import os
 import random
 from contextlib import asynccontextmanager
 from datetime import datetime, timezone
 
 from fastapi import BackgroundTasks, Depends, FastAPI, File, Form, HTTPException, UploadFile
 from fastapi.middleware.cors import CORSMiddleware
+from fastapi.responses import FileResponse
+from fastapi.staticfiles import StaticFiles
 from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy.orm import selectinload
@@ -128,6 +131,21 @@ app = FastAPI(
     lifespan=lifespan,
 )
 app.add_middleware(CORSMiddleware, allow_origins=["*"], allow_methods=["*"], allow_headers=["*"])
+
+
+# ---------------------------------------------------------------------------
+# Static front-end
+# ---------------------------------------------------------------------------
+# Serves the CEHub RMV launcher SPA at / and /static/* so a Thinkific lesson
+# can embed a single iframe URL against the unified API.
+
+_STATIC_DIR = os.path.join(os.path.dirname(__file__), "static")
+if os.path.isdir(_STATIC_DIR):
+    app.mount("/static", StaticFiles(directory=_STATIC_DIR), name="static")
+
+    @app.get("/", include_in_schema=False)
+    async def _root_index() -> FileResponse:
+        return FileResponse(os.path.join(_STATIC_DIR, "index.html"))
 
 
 @app.get("/health")
