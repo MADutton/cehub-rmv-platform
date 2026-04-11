@@ -314,6 +314,10 @@
     $("#phase-indicator").textContent = "";
     $("#response-input").value = "";
     $("#submit-response").disabled = true;
+    $("#submit-response").textContent = "Submit response";
+    // Make sure the respond form is visible. It may have been hidden by a
+    // previous completed session (done=true path) in the same iframe load.
+    $("#respond-form").classList.remove("hidden");
 
     const body = {
       product_type: state.productType,
