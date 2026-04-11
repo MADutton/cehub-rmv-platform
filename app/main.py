@@ -264,6 +264,11 @@ async def start_session(body: StartSessionRequest, db: AsyncSession = Depends(ge
         },
     )
     db.add(session)
+    # Flush so SessionRecord.id (a Python-side column default) is populated
+    # before we reference it on the child TurnRecord. Without this, session.id
+    # is None at TurnRecord construction time and the child INSERT fails with
+    # NotNullViolationError on turns.session_id.
+    await db.flush()
     db.add(TurnRecord(
         session_id=session.id,
         turn_number=1,
