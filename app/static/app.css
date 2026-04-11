@@ -1,0 +1,347 @@
+/* CEHub RMV front-end — minimal, iframe-friendly styles.
+   Designed to look neutral inside a Thinkific lesson iframe at any width. */
+
+:root {
+  --bg: #f7f8fa;
+  --surface: #ffffff;
+  --border: #e3e6ea;
+  --text: #1c1f24;
+  --muted: #5b6270;
+  --primary: #1f6fe0;
+  --primary-dark: #175abd;
+  --primary-fg: #ffffff;
+  --accent: #0d8a6a;
+  --danger: #c23b3b;
+  --chip-bg: #eef2f7;
+  --radius: 10px;
+  --shadow: 0 1px 2px rgba(20, 25, 35, 0.04), 0 4px 12px rgba(20, 25, 35, 0.06);
+  --font: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+}
+
+* { box-sizing: border-box; }
+
+html, body {
+  margin: 0;
+  padding: 0;
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--font);
+  font-size: 16px;
+  line-height: 1.5;
+}
+
+.app {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 20px 20px 80px;
+}
+
+.app-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 12px;
+  padding-bottom: 16px;
+  margin-bottom: 16px;
+  border-bottom: 1px solid var(--border);
+}
+
+.app-title {
+  font-size: 20px;
+  font-weight: 600;
+  margin: 0;
+}
+
+.app-meta { display: flex; gap: 8px; flex-wrap: wrap; }
+
+.chip {
+  background: var(--chip-bg);
+  color: var(--muted);
+  padding: 4px 10px;
+  border-radius: 999px;
+  font-size: 13px;
+  font-weight: 500;
+}
+
+.card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  padding: 24px;
+}
+
+.card-wide { padding: 28px; }
+
+.card h2 { margin-top: 0; font-size: 20px; font-weight: 600; }
+
+.muted { color: var(--muted); }
+.small { font-size: 13px; }
+.hidden { display: none !important; }
+.sr-only {
+  position: absolute;
+  width: 1px; height: 1px;
+  padding: 0; margin: -1px;
+  overflow: hidden; clip: rect(0,0,0,0);
+  white-space: nowrap; border: 0;
+}
+
+.view { margin-bottom: 16px; }
+
+/* Tiles */
+.tiles {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 16px;
+  margin-top: 20px;
+}
+.tile {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 20px;
+  text-align: left;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  transition: border-color 120ms ease, box-shadow 120ms ease, transform 80ms ease;
+  font: inherit;
+  color: inherit;
+}
+.tile:hover {
+  border-color: var(--primary);
+  box-shadow: 0 4px 14px rgba(31, 111, 224, 0.12);
+}
+.tile:active { transform: translateY(1px); }
+.tile-badge {
+  align-self: flex-start;
+  background: var(--primary);
+  color: var(--primary-fg);
+  padding: 2px 10px;
+  border-radius: 999px;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+}
+.tile-title { font-size: 17px; font-weight: 600; }
+.tile-desc { color: var(--muted); font-size: 14px; }
+.tile:disabled {
+  cursor: not-allowed;
+  opacity: 0.55;
+}
+
+/* Lists (case / module pickers) */
+.list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin: 16px 0;
+}
+.list-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 14px 16px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  cursor: pointer;
+  text-align: left;
+  font: inherit;
+  color: inherit;
+  gap: 12px;
+}
+.list-item:hover { border-color: var(--primary); }
+.list-item-title { font-weight: 600; }
+.list-item-meta { color: var(--muted); font-size: 13px; margin-top: 2px; }
+.list-item-right { color: var(--muted); font-size: 13px; white-space: nowrap; }
+
+/* Forms */
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-top: 8px;
+}
+.form label { font-size: 14px; font-weight: 600; }
+.form input[type="text"],
+.form input[type="file"],
+textarea {
+  width: 100%;
+  padding: 10px 12px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  font: inherit;
+  background: var(--surface);
+  color: var(--text);
+}
+textarea { resize: vertical; min-height: 120px; }
+.form input:focus,
+textarea:focus {
+  outline: none;
+  border-color: var(--primary);
+  box-shadow: 0 0 0 3px rgba(31, 111, 224, 0.18);
+}
+
+/* Buttons */
+.actions { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 14px; }
+.btn {
+  padding: 10px 18px;
+  border-radius: 8px;
+  border: 1px solid transparent;
+  font: inherit;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 120ms ease, border-color 120ms ease;
+}
+.btn[disabled] { cursor: not-allowed; opacity: 0.6; }
+.btn-primary {
+  background: var(--primary);
+  color: var(--primary-fg);
+  border-color: var(--primary);
+}
+.btn-primary:hover:not([disabled]) { background: var(--primary-dark); border-color: var(--primary-dark); }
+.btn-ghost {
+  background: transparent;
+  color: var(--text);
+  border-color: var(--border);
+}
+.btn-ghost:hover:not([disabled]) { border-color: var(--primary); color: var(--primary); }
+
+/* Session view */
+.session-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 8px;
+}
+.phase-chip {
+  background: var(--chip-bg);
+  color: var(--muted);
+  padding: 4px 10px;
+  border-radius: 999px;
+  font-size: 13px;
+  font-weight: 500;
+}
+.opening {
+  background: #fbfcfe;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 16px;
+  margin: 10px 0 18px;
+  font-size: 14px;
+  white-space: pre-wrap;
+}
+.transcript {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  margin: 12px 0 18px;
+}
+.turn {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+.turn-label {
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+.turn-examiner .turn-label { color: var(--primary); }
+.turn-candidate .turn-label { color: var(--accent); }
+.turn-text {
+  padding: 12px 14px;
+  border-radius: 8px;
+  border: 1px solid var(--border);
+  background: var(--surface);
+  white-space: pre-wrap;
+}
+.turn-candidate .turn-text { background: #f3f8f5; }
+.turn-examiner.is-followup .turn-text {
+  border-left: 3px solid var(--primary);
+  background: #f2f7fe;
+}
+
+.respond-form { display: flex; flex-direction: column; gap: 8px; }
+
+/* Result */
+.status {
+  background: #fbfcfe;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 14px 16px;
+  color: var(--muted);
+  font-size: 14px;
+}
+.result-body { margin-top: 14px; }
+.result-total { margin: 10px 0 4px; font-size: 20px; }
+.result-outcome {
+  display: inline-block;
+  padding: 6px 14px;
+  border-radius: 999px;
+  font-weight: 700;
+  letter-spacing: 0.03em;
+  margin-bottom: 12px;
+}
+.outcome-tone-positive { background: #e1f5ec; color: #0d7a54; }
+.outcome-tone-neutral  { background: #fff6da; color: #8a6100; }
+.outcome-tone-negative { background: #fde5e5; color: #9e1f1f; }
+
+.section-title {
+  margin: 18px 0 6px;
+  font-size: 14px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+.bullet-list {
+  margin: 4px 0 8px;
+  padding-left: 20px;
+  color: var(--text);
+}
+.bullet-list li { margin-bottom: 4px; }
+.review-rec { margin-top: 16px; }
+
+.domain-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 12px;
+  margin: 12px 0;
+}
+.domain-card {
+  padding: 12px 14px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: #fbfcfe;
+}
+.domain-name { font-size: 12px; color: var(--muted); text-transform: uppercase; letter-spacing: 0.04em; }
+.domain-score { font-size: 22px; font-weight: 700; margin-top: 2px; }
+.domain-rationale { font-size: 13px; color: var(--muted); margin-top: 6px; }
+
+.phase-summary {
+  padding: 10px 12px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: #fbfcfe;
+  margin: 6px 0;
+}
+.phase-summary-text { font-size: 14px; margin-top: 4px; white-space: pre-wrap; }
+
+.error { color: var(--danger); }
+
+/* Narrow widths — common in Thinkific right-side embed */
+@media (max-width: 520px) {
+  .app { padding: 16px 14px 60px; }
+  .card { padding: 18px; }
+  .card-wide { padding: 20px; }
+  .app-title { font-size: 18px; }
+  .tile { padding: 16px; }
+}
