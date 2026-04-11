@@ -56,17 +56,40 @@
         : { "Content-Type": "application/json" },
       ...options,
     });
+
+    // Read the body exactly once. Calling res.json() and then falling back
+    // to res.text() would throw "body stream already read" because .json()
+    // consumes the stream even when parsing fails.
+    const raw = await res.text();
+
     if (!res.ok) {
-      let detail = "";
+      let detail = raw;
       try {
-        const body = await res.json();
-        detail = body.detail || JSON.stringify(body);
+        const parsed = JSON.parse(raw);
+        if (parsed && typeof parsed === "object") {
+          if (typeof parsed.detail === "string") {
+            detail = parsed.detail;
+          } else if (Array.isArray(parsed.detail)) {
+            // FastAPI validation errors come back as an array
+            detail = parsed.detail
+              .map((e) => `${(e.loc || []).join(".")}: ${e.msg}`)
+              .join("; ");
+          } else {
+            detail = JSON.stringify(parsed);
+          }
+        }
       } catch (_) {
-        detail = await res.text();
+        // Body wasn't JSON — keep the raw text as the detail.
       }
-      throw new Error(`HTTP ${res.status}: ${detail}`);
+      throw new Error(`HTTP ${res.status}: ${detail || res.statusText}`);
     }
-    return res.json();
+
+    if (!raw) return null;
+    try {
+      return JSON.parse(raw);
+    } catch (e) {
+      throw new Error(`Invalid JSON response from ${path}: ${e.message}`);
+    }
   }
 
   const apiListCases = () => api("/cases");
