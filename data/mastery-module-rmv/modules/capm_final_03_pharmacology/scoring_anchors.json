@@ -1,0 +1,84 @@
+{
+  "module_id": "capm_final_03_pharmacology",
+  "anchors": {
+    "core_concept_understanding": {
+      "high_value_elements": [
+        "Correctly identifies full mu agonists (morphine, fentanyl, hydromorphone, methadone) and distinguishes from partial agonist (buprenorphine) and kappa agonist (butorphanol)",
+        "Correctly states NSAIDs work via COX enzyme inhibition; distinguishes COX-1 vs COX-2 selectivity and GI safety implications",
+        "Correctly identifies grapiprant as an EP4 receptor antagonist, not a COX inhibitor",
+        "Correctly identifies ketamine CRI (~60 mg/L at 5-10 mL/kg/hr) and amantadine (3-5 mg/kg once daily orally) as the two primary NMDA antagonist options with different routes and clinical contexts",
+        "Correctly identifies tramadol: M1 (O-desmethyltramadol) as the active mu-opioid metabolite; CYP2D6 required for conversion; many dogs have limited CYP2D6 activity making tramadol act primarily as SNRI; cats have effective analgesic response at 2 mg/kg TID",
+        "Correctly identifies anti-NGF monoclonal antibodies: frunevetmab (Solensia) for cats, bedinvetmab (Librela) for dogs; mechanism is NGF blockade preventing TrkA receptor activation",
+        "States acetaminophen is absolutely contraindicated in cats due to glucuronidation deficiency causing methemoglobinemia"
+      ],
+      "major_concerns": [
+        "Does not know tramadol's M1 metabolite or the CYP2D6 species difference",
+        "Cannot explain the feline NSAID caution beyond 'cats are sensitive to drugs'",
+        "Recommends acetaminophen for a cat",
+        "Confuses corticosteroid and NSAID mechanism of action"
+      ]
+    },
+    "clinical_application": {
+      "high_value_elements": [
+        "Correctly avoids long-term NSAIDs in IRIS Stage 3-4 CKD cat (prostaglandin E2 required for afferent arteriolar tone)",
+        "Includes Solensia (frunevetmab) as a preferred option for this CKD cat: renal-safe mechanism, monthly subcutaneous injection, specifically licensed for feline OA pain",
+        "Selects buprenorphine via oral transmucosal (OTM) route as the practical home opioid for cats",
+        "Includes gabapentin with explicit dose reduction for Stage 3-4 CKD: half-life extends from ~4 hours in normal cats to 13-20 hours in Stage 3-4 (linear correlation with IRIS stage)",
+        "Adds amantadine 3-5 mg/kg once daily for the neuropathic pain flare component",
+        "Correctly administers zoledronate: 0.1-0.5 mg/kg IV over exactly 15 minutes in normal saline only (not dextrose), maximum 4 mg; pre-screens for active dental disease"
+      ],
+      "major_concerns": [
+        "Prescribes long-term NSAID in Stage 3 CKD without contraindication acknowledgment",
+        "Does not recognize gabapentin half-life extension in CKD and prescribes standard dosing intervals",
+        "Combines NSAID and corticosteroid without contraindication awareness",
+        "Administers zoledronate in dextrose or without checking for dental disease"
+      ]
+    },
+    "prioritization_decision_making": {
+      "high_value_elements": [
+        "Immediately flags the NSAID plus corticosteroid combination as requiring intervention (dual prostaglandin inhibition and mucosal barrier disruption)",
+        "Identifies bisphosphonate dental disease contraindication: active dental disease or planned procedures require washout due to jaw osteonecrosis risk",
+        "Correctly describes DEA Schedule II/III record-keeping requirements: drug log, biannual inventory, separate locked storage, disposal records"
+      ],
+      "major_concerns": [
+        "Does not recognize the NSAID plus corticosteroid combination as dangerous",
+        "Cannot describe any controlled substance compliance requirement",
+        "Does not know the bisphosphonate dental disease contraindication"
+      ]
+    },
+    "justification": {
+      "high_value_elements": [
+        "Explains GI hemorrhage mechanism of NSAID + corticosteroid: NSAIDs reduce gastroprotective prostaglandins; corticosteroids reduce mucosal repair and increase acid secretion",
+        "Explains renal hemodynamic mechanism of NSAID risk in CKD: afferent arteriolar tone is prostaglandin-dependent when renal perfusion pressure is compromised",
+        "Justifies buprenorphine over full mu for home use: ceiling effect on respiratory depression, practical OTM absorption in cats (~50% bioavailability via OTM)",
+        "Justifies Solensia as renal-safe: mechanism does not involve renal prostaglandin pathways"
+      ],
+      "major_concerns": [
+        "Provides drug names without pharmacologic justification",
+        "Cannot explain the mechanism behind any contraindication"
+      ]
+    },
+    "boundaries_uncertainty": {
+      "high_value_elements": [
+        "Acknowledges no NSAID is risk-free in CKD and articulates a monitoring plan if short-term use is considered",
+        "Recognizes tramadol's limited evidence for analgesia in dogs and does not recommend it as a sole analgesic in that species",
+        "Acknowledges uncertainty about optimal gabapentin dosing in CKD cats and commits to starting low with clinical monitoring"
+      ],
+      "major_concerns": [
+        "Presents drugs as safe in contexts where the fellowship explicitly identified risks",
+        "Cannot identify a single limitation or monitoring requirement for any drug selected"
+      ]
+    },
+    "mastery_depth": {
+      "high_value_elements": [
+        "Constructs a specific opioid-sparing TPLO protocol: NSAID + gabapentinoid + amantadine or ketamine CRI + locoregional block (e.g., femoral/sciatic nerve block)",
+        "Integrates Epstein fellowship content: duloxetine ~1 mg/kg q24h orally for dogs for neuropathic pain; amitriptyline 0.5-2 mg/kg q12-24h dogs or 5-10 mg per cat once daily",
+        "Discusses CBD evidence critically: starting dose 0.1-2 mg/kg BID; notes THC is toxic to pets; requires product purity verification"
+      ],
+      "major_concerns": [
+        "Cannot construct a realistic opioid-sparing protocol with specific drugs and doses",
+        "Discusses pharmacology only in abstract terms disconnected from clinical decision-making"
+      ]
+    }
+  }
+}

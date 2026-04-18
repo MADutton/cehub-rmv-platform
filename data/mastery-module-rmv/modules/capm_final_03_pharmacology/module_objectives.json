@@ -1,0 +1,17 @@
+{
+  "module_id": "capm_final_03_pharmacology",
+  "learning_objectives": [
+    "Compare opioid classes (full mu, partial mu, kappa) and identify species-specific differences in receptor response and practical administration routes",
+    "Explain tramadol M1 metabolite, CYP2D6 hepatic conversion, and why dogs often have limited opioid-pathway analgesic response",
+    "Identify anti-NGF monoclonal antibodies (frunevetmab/Solensia for cats; bedinvetmab/Librela for dogs) and their mechanism and renal-safety profile",
+    "Apply gabapentin dose adjustment for CKD cats: half-life extends from ~4 hours to 13-20 hours in IRIS Stage 3-4",
+    "Recognize high-risk prescribing combinations: NSAID + corticosteroid, bisphosphonate + active dental disease",
+    "Describe the zoledronate protocol: 0.1-0.5 mg/kg IV over exactly 15 minutes in normal saline only, maximum 4 mg",
+    "Construct opioid-sparing perioperative protocols combining NSAID, gabapentinoid, NMDA antagonist, and locoregional technique"
+  ],
+  "high_priority_objectives": [
+    "Apply gabapentin dose adjustment for CKD cats and recognize NSAIDs as contraindicated in IRIS Stage 3-4",
+    "Recognize high-risk prescribing combinations and respond appropriately"
+  ],
+  "mastery_threshold_note": "Fellows must demonstrate specific drug doses, routes, and contraindication reasoning. Generic drug lists without doses or mechanisms indicate insufficient mastery."
+}
