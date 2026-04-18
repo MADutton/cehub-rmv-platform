@@ -1,0 +1,18 @@
+{
+  "module_id": "capm_final_05_recognition_assessment",
+  "learning_objectives": [
+    "Name validated feline acute pain scales with rescue thresholds: Feline Grimace Scale (5 action units, max 10, threshold \u22654); UF EPS Short Form (max 12, threshold \u22644); Glasgow Composite Skin Pain Scale (max 20, threshold \u22655)",
+    "Name validated canine acute pain scale: Glasgow CMPS-SF (max 24 mobile/20 immobile, threshold \u22656/\u22655)",
+    "Name validated chronic CMIs: CBPI (11 items, 3 domains) and LOAD (13 items) for dogs; Feline Musculoskeletal Pain Screening Checklist for cats",
+    "Describe all 5 Feline Grimace Scale action units: ear positioning, orbital tightening, muzzle tension, whisker position, head position",
+    "Explain FAS (Fear, Anxiety, Stress) impact on concurrent pain scale interpretation and required intervention before re-scoring",
+    "Apply validated assessment workflow to geriatric cat presenting with behavioral changes",
+    "Recognize prey species pain masking behavior from an evolutionary standpoint and apply minimum post-procedural assessment standard",
+    "Implement pain as the fourth vital sign through concrete practice-level workflow changes"
+  ],
+  "high_priority_objectives": [
+    "Name validated feline and canine pain scales with specific rescue threshold scores",
+    "Recognize prey species pain masking and apply minimum post-procedural assessment standard"
+  ],
+  "mastery_threshold_note": "Fellows must know specific validated tool names, domain structures, and rescue thresholds. Generic descriptions of behavioral assessment without tool names or scores indicate insufficient mastery."
+}
