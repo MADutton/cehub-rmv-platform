@@ -1,0 +1,17 @@
+{
+  "module_id": "capm_final_04_non_pharm",
+  "learning_objectives": [
+    "Explain the frequency-dependent mediator differences in electroacupuncture: 2 Hz stimulates enkephalin/beta-endorphin; 100 Hz stimulates dynorphin",
+    "Describe the adipokine mechanism by which obesity amplifies OA pain beyond mechanical load reduction",
+    "Apply the COAST staging framework to guide non-pharmacological treatment selection and escalation",
+    "Identify photobiomodulation contraindications including active neoplasia",
+    "Use force plate gait analysis as an objective outcome measure for non-pharmacological interventions",
+    "Recognize the clinical threshold at which non-pharmacological management alone becomes a standard-of-care failure",
+    "Integrate non-pharmacological modalities with pharmacological management in a mechanistically coherent multimodal plan"
+  ],
+  "high_priority_objectives": [
+    "Identify photobiomodulation contraindications including active neoplasia",
+    "Recognize the clinical threshold at which non-pharmacological management alone becomes a standard-of-care failure"
+  ],
+  "mastery_threshold_note": "Fellows must demonstrate safety awareness and escalation thresholds, not only knowledge of modality mechanisms. Presenting all non-pharmacological modalities as universally safe and sufficient indicates insufficient mastery."
+}
