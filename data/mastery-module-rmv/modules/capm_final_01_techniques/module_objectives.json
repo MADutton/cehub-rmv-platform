@@ -1,0 +1,18 @@
+{
+  "module_id": "capm_final_01_techniques",
+  "learning_objectives": [
+    "Explain the mechanism of analgesia for locoregional anesthesia, neuraxial analgesia, electroacupuncture, and photobiomodulation",
+    "Select anatomically appropriate nerve branches for common companion animal surgical procedures including TECA-BO",
+    "Calculate maximum safe local anesthetic doses and recognize signs of local anesthetic systemic toxicity (LAST)",
+    "Apply photobiomodulation delivery parameters including wavelength range (635-904 nm) and cytochrome C oxidase as the primary intracellular target",
+    "Distinguish electroacupuncture frequency-dependent mediator release (2 Hz vs 100 Hz)",
+    "Identify contraindications and complete safety screening for each technique modality before use",
+    "Integrate techniques into multimodal perioperative analgesia plans with mechanistic rationale",
+    "Recognize scope-of-competence limits and describe credentialing pathways for new techniques"
+  ],
+  "high_priority_objectives": [
+    "Select anatomically appropriate nerve branches for common companion animal surgical procedures including TECA-BO",
+    "Identify contraindications and complete safety screening for each technique modality before use"
+  ],
+  "mastery_threshold_note": "Fellows must demonstrate specific knowledge of delivery parameters, safety screening, and technique selection rationale. Generic mechanism descriptions without clinical application indicate insufficient mastery."
+}

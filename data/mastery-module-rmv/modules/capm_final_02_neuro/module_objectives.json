@@ -1,0 +1,17 @@
+{
+  "module_id": "capm_final_02_neuro",
+  "learning_objectives": [
+    "Trace the nociceptive pathway from peripheral stimulus to conscious pain perception, naming fiber types, neurotransmitters, and receptors at each relay",
+    "Explain wind-up and NMDA receptor activation at the dorsal horn and their clinical significance for chronic pain",
+    "Identify the descending inhibitory system including the PAG, descending tract, and primary neurotransmitters (serotonin and norepinephrine)",
+    "Name the two NMDA antagonist options taught in the fellowship with doses and appropriate clinical contexts",
+    "Distinguish peripheral sensitization from central sensitization clinically and pharmacologically",
+    "Recognize species-specific neuroanatomic differences relevant to analgesia in cats, rabbits, and other non-canine species",
+    "Explain cats' glucuronidation deficiency and its implications for analgesic drug selection and dosing"
+  ],
+  "high_priority_objectives": [
+    "Explain wind-up and NMDA receptor activation at the dorsal horn and their clinical significance for chronic pain",
+    "Distinguish peripheral sensitization from central sensitization clinically and pharmacologically"
+  ],
+  "mastery_threshold_note": "Fellows must connect neurophysiology to clinical drug selection. Naming mechanisms without applying them to treatment decisions indicates surface-level understanding."
+}

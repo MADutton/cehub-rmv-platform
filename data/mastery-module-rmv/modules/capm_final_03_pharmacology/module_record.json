@@ -1,0 +1,19 @@
+{
+  "module_id": "capm_final_03_pharmacology",
+  "program": "Companion Animal Pain Management Fellowship",
+  "module_title": "CAPM Final Exam \u2014 Section 3: Pharmacology",
+  "module_type": "final_exam_section",
+  "week": null,
+  "estimated_duration_minutes": 25,
+  "rmv_required": true,
+  "rmv_template_id": "mastery_module_rmv_interview_v1",
+  "source_files": ["prompts.json", "scoring_anchors.json"],
+  "status": "active",
+  "exam_metadata": {
+    "exam_id": "capm_fellowship_final_exam_v1",
+    "section_number": 3,
+    "section_total": 5,
+    "blueprint_weight": 0.1848,
+    "pass_threshold_percent": 70
+  }
+}

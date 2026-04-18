@@ -1,0 +1,74 @@
+[
+  {
+    "prompt_id": "s2_p1",
+    "phase_id": "concept_check",
+    "prompt_type": "primary",
+    "text": "Trace the nociceptive pathway from a peripheral noxious stimulus \u2014 for example, a surgical skin incision \u2014 to conscious pain perception. As you move from periphery to cortex, name the primary fiber types at each level, the key neurotransmitters and receptors at each relay, and identify at least three specific points in this pathway where the analgesic drug classes taught in this fellowship exert their effects. Be explicit about what happens at the dorsal horn during sustained nociceptive input.",
+    "followups": [
+      {
+        "followup_id": "s2_p1_f1",
+        "trigger": "vague_generic_answer",
+        "text": "Based on the content covered in this fellowship, describe specifically what happens at the dorsal horn during prolonged or repeated nociceptive input: which specific receptor becomes activated, what the resulting process is called, why it is clinically significant, and name one drug class from this fellowship that targets that receptor."
+      },
+      {
+        "followup_id": "s2_p1_f2",
+        "trigger": "missing_safety",
+        "text": "Based on the content covered in this fellowship, identify the descending inhibitory system: name the key brainstem region that is the primary origin of descending inhibition, the descending tract involved, the two primary inhibitory neurotransmitters, and one drug class from this fellowship that augments this inhibitory pathway."
+      }
+    ]
+  },
+  {
+    "prompt_id": "s2_p2",
+    "phase_id": "applied_reasoning",
+    "prompt_type": "primary",
+    "text": "A 9-year-old German Shepherd Dog presents with chronic lumbosacral pain that has failed to respond adequately to a full-dose NSAID after 8 weeks of therapy. On examination you identify allodynia in the paraspinal musculature extending well cranial to the primary lesion site. Using the neurophysiology taught in this fellowship, explain what has most likely happened at the dorsal horn, why it predicts poor response to NSAID monotherapy, and \u2014 based on receptor pharmacology \u2014 which two adjunctive drug classes you would add, including specific drug names and the receptor or pathway each targets.",
+    "followups": [
+      {
+        "followup_id": "s2_p2_f1",
+        "trigger": "unsupported_conclusion",
+        "text": "Based on the content covered in this fellowship, you recommended adding an NMDA antagonist. Name the two NMDA antagonist options taught in this fellowship \u2014 one used primarily perioperatively via CRI and one appropriate for chronic outpatient use once daily \u2014 give the dose of each, and explain why blocking the NMDA receptor at this stage of established sensitization may still be clinically useful."
+      },
+      {
+        "followup_id": "s2_p2_f2",
+        "trigger": "cannot_apply",
+        "text": "Based on the content covered in this fellowship, the allodynia in this dog extends well beyond the primary lesion site. What does this spatial distribution tell you about whether this is peripheral or central sensitization, and how does that distinction change which part of the neuraxis you are targeting with your adjunctive agents?"
+      }
+    ]
+  },
+  {
+    "prompt_id": "s2_p3",
+    "phase_id": "prioritization_safety",
+    "prompt_type": "primary",
+    "text": "This fellowship included neuroanatomy content specific to non-canine species. Choose two non-canine species covered in this fellowship \u2014 which may include cats, rabbits, ferrets, birds, or reptiles \u2014 and explain: (a) at least one neuroanatomic or pharmacologic difference from the dog that is directly relevant to analgesic selection or technique application; and (b) one common clinical mistake that results from ignoring that difference.",
+    "followups": [
+      {
+        "followup_id": "s2_p3_f1",
+        "trigger": "vague_generic_answer",
+        "text": "Based on the content covered in this fellowship, if you are performing a lumbosacral epidural in a rabbit, at what vertebral level does the spinal cord end in rabbits \u2014 and how does this differ from the dog \u2014 and what does this mean for where you place the needle and what you risk if you do not account for this anatomic difference?"
+      },
+      {
+        "followup_id": "s2_p3_f2",
+        "trigger": "cannot_apply",
+        "text": "Based on the content covered in this fellowship, what metabolic enzyme pathway are cats deficient in compared to dogs, which phase of hepatic drug metabolism does this affect, and \u2014 for two commonly used analgesics \u2014 what does this deficiency mean for drug selection or dosing interval in cats?"
+      }
+    ]
+  },
+  {
+    "prompt_id": "s2_p4",
+    "phase_id": "reflection_transfer",
+    "prompt_type": "primary",
+    "text": "Of the neurophysiologic concepts covered in this fellowship \u2014 central sensitization, wind-up, descending inhibitory modulation, peripheral sensitization, neuroplasticity \u2014 which do you believe is most consistently under-applied by general practitioners, and how will you use that concept to make a concrete change in how you communicate with referring veterinarians or counsel owners about why a patient is not responding to single-agent therapy?",
+    "followups": [
+      {
+        "followup_id": "s2_p4_f1",
+        "trigger": "vague_generic_answer",
+        "text": "Based on the content covered in this fellowship, give me a specific client conversation \u2014 as specific as possible \u2014 that translates central sensitization into language a pet owner can understand and act on. What is the core message, and what specific action does it motivate the owner to take?"
+      },
+      {
+        "followup_id": "s2_p4_f2",
+        "trigger": "cannot_apply",
+        "text": "Based on the content covered in this fellowship, a patient with established central sensitization is showing only partial response to gabapentin monotherapy. Walk me through the neurophysiologic rationale for why gabapentin alone may be insufficient, what pathway it targets versus what it does not, and what drug or approach you would add based on the mechanisms taught in this fellowship."
+      }
+    ]
+  }
+]

@@ -1,0 +1,76 @@
+{
+  "module_id": "capm_final_04_non_pharm",
+  "anchors": {
+    "core_concept_understanding": {
+      "high_value_elements": [
+        "Correctly identifies electroacupuncture frequency-dependent mediator release: low frequency (~2 Hz) stimulates enkephalin and beta-endorphin release at spinal and supraspinal levels; high frequency (~100 Hz) stimulates dynorphin release primarily at spinal cord level",
+        "Correctly identifies PBM mechanism: photons in 635-904 nm range absorbed by cytochrome C oxidase in mitochondria, producing ATP, nitric oxide, and reactive oxygen species",
+        "Correctly identifies adipokine mechanism of obesity amplifying OA pain: excess adipose tissue produces pro-inflammatory adipokines (leptin dysregulation, reduced adiponectin) that upregulate inflammatory cytokines in joint tissue independent of mechanical load",
+        "Identifies therapeutic exercise as reducing pain through muscle strengthening (joint stability), endorphin release, and improved proprioception \u2014 not merely mechanical load redistribution"
+      ],
+      "major_concerns": [
+        "Cannot distinguish electroacupuncture from dry needling or explain the frequency-dependent mediator difference",
+        "Cannot explain PBM mechanism beyond 'it heats the tissue'",
+        "Cannot explain why weight loss benefits OA pain beyond mechanical load reduction"
+      ]
+    },
+    "clinical_application": {
+      "high_value_elements": [
+        "Applies COAST staging to the 8-year-old Labrador: bilateral radiographic OA with functional impairment requires multimodal approach",
+        "Recommends weight loss as first-line co-primary intervention with realistic target (BCS 5/9) and adipokine mechanism of benefit",
+        "Identifies force plate gait analysis as an objective non-owner-reported outcome measure to quantify treatment response",
+        "For cats: correctly recommends environmental modifications including steps/ramps to elevated resting spots, lowered litter box walls, food and water bowls at accessible height, soft warm bedding",
+        "Identifies escalation threshold: persistent pain scale scores above treatment trigger, or inability to perform baseline activities despite 4-8 weeks consistent non-pharmacological management"
+      ],
+      "major_concerns": [
+        "Cannot apply COAST staging or explain what it guides",
+        "Recommends non-pharmacological management as sole long-term approach without identifying any escalation threshold",
+        "Has no objective outcome measure for treatment response"
+      ]
+    },
+    "prioritization_decision_making": {
+      "high_value_elements": [
+        "Identifies active neoplasia as an absolute contraindication to PBM: confirmed splenic mass requires withholding laser therapy due to risk of stimulating tumor growth",
+        "Correctly applies escalation threshold: if non-pharmacological management consistently implemented for 4-8 weeks without reaching target pain score or functional improvement, pharmacological addition is indicated",
+        "Correctly identifies Synovetin OA (Tn-117, intra-articular radiopharmaceutical) as an emerging modality for canine elbow OA with ~1-year duration from a single injection"
+      ],
+      "major_concerns": [
+        "Applies PBM to a patient with confirmed neoplasia without raising the contraindication",
+        "Cannot identify any clinical threshold at which non-pharmacological management alone becomes a standard-of-care failure"
+      ]
+    },
+    "justification": {
+      "high_value_elements": [
+        "Explains why PBM is contraindicated over neoplasia: photobiomodulation promotes cell proliferation and angiogenesis; same mechanisms that promote tissue healing may stimulate tumor growth",
+        "Explains force plate rationale: owner-reported assessments are subjective and prone to accommodation bias; force plate measures weight-bearing symmetry objectively",
+        "Justifies electroacupuncture over dry needling for IVDD and neuropathic conditions based on spinal cord-level dynorphin release at high frequencies providing segmental inhibitory effect"
+      ],
+      "major_concerns": [
+        "Cannot explain why any non-pharmacological modality is contraindicated in specific patient types",
+        "Cannot justify technique selection over alternatives with mechanism-based reasoning"
+      ]
+    },
+    "boundaries_uncertainty": {
+      "high_value_elements": [
+        "Acknowledges evidence quality for many non-pharmacological modalities in veterinary medicine is lower than ideal; can distinguish well-supported uses from extrapolations",
+        "Identifies credentialing requirement for acupuncture and electroacupuncture in veterinary practice",
+        "Acknowledges exotic species have minimal species-validated non-pharmacological evidence and describes careful monitoring approach"
+      ],
+      "major_concerns": [
+        "Presents non-pharmacological modalities as universally safe and applicable to all species without evidence qualification",
+        "Cannot identify any training or credentialing requirement for acupuncture or electroacupuncture"
+      ]
+    },
+    "mastery_depth": {
+      "high_value_elements": [
+        "Integrates non-pharmacological modalities into a coherent multimodal plan where each component targets a different mechanism: weight management (adipokine reduction), exercise (muscle stabilization, endorphin), PBM (mitochondrial/anti-inflammatory), EA (endogenous opioid), environmental modification (load/stress reduction)",
+        "Applies COAST staging framework to guide which modalities are appropriate at each disease stage",
+        "Connects non-pharmacological content to FAS and stress reduction: environmental modification in cats reduces both pain perception and stress-amplified pain"
+      ],
+      "major_concerns": [
+        "Cannot integrate non-pharmacological modalities with pharmacological management into a coherent multimodal construct",
+        "Treats non-pharmacological modalities as interchangeable add-ons without mechanism-based patient matching"
+      ]
+    }
+  }
+}

@@ -1,0 +1,79 @@
+{
+  "module_id": "capm_final_05_recognition_assessment",
+  "anchors": {
+    "core_concept_understanding": {
+      "high_value_elements": [
+        "Correctly distinguishes acute pain scales (used in-hospital by trained staff) from chronic CMIs (owner-completed, measuring function over days to weeks)",
+        "Feline acute scales named with thresholds: (1) Feline Grimace Scale \u2014 5 action units (ear positioning, orbital tightening, muzzle tension, whisker position, head position), max 10, threshold \u22654; (2) UF EPS Short Form \u2014 max 12, threshold \u22644; (3) Glasgow Composite Skin Pain Scale for cats \u2014 max 20, threshold \u22655",
+        "Canine acute scale named: Glasgow CMPS-SF \u2014 6 items, max 24 (mobile) or 20 (immobile), rescue threshold \u22656 (mobile) or \u22655 (immobile)",
+        "Canine chronic CMIs named: CBPI \u2014 11 items, 3 domains (pain severity, pain interference with function, quality of life); LOAD \u2014 13 items, 2 mobility subscales; COAST for staging",
+        "Correctly describes FAS: Fear, Anxiety, Stress; elevated FAS score means pain scale scores are unreliable; intervention (anxiolytic medication, environmental modification) required before re-scoring"
+      ],
+      "major_concerns": [
+        "Cannot name a single validated pain scale for either dogs or cats",
+        "Cannot state any rescue analgesia threshold score",
+        "Cannot describe what FAS stands for or that high FAS inflates pain scores"
+      ]
+    },
+    "clinical_application": {
+      "high_value_elements": [
+        "Asks specific behavioral history questions: Can the cat jump to its usual height? Has litter box entry changed? Has grooming of hard-to-reach areas changed? Has interaction with family decreased?",
+        "Applies Feline Grimace Scale during the physical examination (validated for in-hospital use)",
+        "Correctly interprets FGS score of 6/10 as above rescue threshold of \u22654; recognizes owner verbal score of 2/10 reflects chronic functional observation (different construct)",
+        "Differentiates chronic OA pain from CDS, hyperthyroidism, and normal aging using specific clinical criteria",
+        "Establishes documented baseline allowing future comparisons to monitor treatment response"
+      ],
+      "major_concerns": [
+        "Relies solely on owner description without applying any validated instrument",
+        "Interprets owner verbal score as overriding the FGS score without understanding what each measure captures",
+        "Attributes all behavioral changes in the geriatric cat to normal aging without structured assessment"
+      ]
+    },
+    "prioritization_decision_making": {
+      "high_value_elements": [
+        "Identifies prey species pain under-recognition as the highest-priority systematic assessment failure: evolutionary hardwiring suppresses pain display to avoid predator detection",
+        "Applies minimum post-procedural assessment standard to all prey species regardless of behavioral appearance: fixed time interval assessment using physiological indicators",
+        "Correctly interprets discordant physiological indicators (HR 140, non-weight-bearing, anorexia) as evidence of under-treated pain despite low behavioral pain scale score"
+      ],
+      "major_concerns": [
+        "Cannot identify the under-recognition risk for any prey species",
+        "Interprets a quiet, non-vocalizing post-surgical rabbit or bird as necessarily pain-free",
+        "Has no strategy for assessing pain in a patient where behavioral scoring is unreliable"
+      ]
+    },
+    "justification": {
+      "high_value_elements": [
+        "Explains evolutionary basis for pain masking in prey species: mid-level predators that display weakness are targeted by larger predators; behavioral suppression of pain cues is adaptive",
+        "Explains why owner-reported and clinic-based scores differ: owners observe habitual behavior over weeks (functional domain); clinicians observe immediate behavioral/facial response to examination (acute domain)",
+        "Justifies FGS for caged or hospitalized cats: facial action units are observable without requiring the cat to locomote",
+        "Explains why stoic breeds suppress behavioral pain expression; physiological responses are harder to consciously suppress"
+      ],
+      "major_concerns": [
+        "Cannot explain why prey species mask pain from an evolutionary standpoint",
+        "Cannot explain why a discrepant owner and clinic score warrants further investigation"
+      ]
+    },
+    "boundaries_uncertainty": {
+      "high_value_elements": [
+        "Acknowledges validated acute pain scales do not exist for all species; best-available adaptations must be used with explicit uncertainty",
+        "Acknowledges challenge of distinguishing chronic pain from CDS in geriatric cats and describes multimodal workup and analgesia trial",
+        "Identifies when specialist consultation is appropriate for complex neuropathic or exotic species presentations"
+      ],
+      "major_concerns": [
+        "Claims to accurately assess pain in all species using the same scale developed for dogs or cats",
+        "Cannot identify any patient type for which current validated tools are insufficient or absent"
+      ]
+    },
+    "mastery_depth": {
+      "high_value_elements": [
+        "Integrates WASVA pain guidelines: pain is the fourth vital sign; assessment baseline before surgery, every 30 minutes for 6-8 hours post-op; avoid disturbing cats eating or sleeping as signs of adequate pain control",
+        "Discusses gabapentin's effect on neurological exam: pre-visit gabapentin in cats affects gait and postural reactions; neurological assessments must be timed to account for half-life (4 hours normal cats; longer in CKD)",
+        "Connects assessment accuracy directly to treatment outcome: unmeasured pain is effectively untreated pain; systematic assessment detects and corrects oligoanalgesia"
+      ],
+      "major_concerns": [
+        "Cannot integrate WASVA guideline recommendations into a clinical workflow",
+        "Treats pain assessment as an optional clinical extra rather than a core standard of care"
+      ]
+    }
+  }
+}
