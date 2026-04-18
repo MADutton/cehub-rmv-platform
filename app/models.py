@@ -53,6 +53,9 @@ class SessionRecord(Base):
     status: Mapped[str] = mapped_column(String(20), default="active")
     prompts: Mapped[list] = mapped_column(JSON, nullable=False)
     state: Mapped[dict] = mapped_column(JSON, nullable=False)
+    # Candidate subgroup data passed from the LMS (specialty, cohort, program, etc.).
+    # Enables DIF screening and fairness analysis once N is sufficient.
+    metadata: Mapped[dict | None] = mapped_column(JSON, nullable=True)
     created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), default=_now)
     completed_at: Mapped[datetime | None] = mapped_column(DateTime(timezone=True), nullable=True)
 
@@ -79,6 +82,10 @@ class TurnRecord(Base):
     is_followup: Mapped[bool] = mapped_column(Boolean, default=False)
     prompt_text: Mapped[str] = mapped_column(Text, nullable=False)
     response_text: Mapped[str | None] = mapped_column(Text, nullable=True)
+    # Process-data timestamps — enables response latency analysis and flags
+    # anomalous patterns (rapid guessing, disengagement, external lookup).
+    prompt_delivered_at: Mapped[datetime | None] = mapped_column(DateTime(timezone=True), nullable=True)
+    response_submitted_at: Mapped[datetime | None] = mapped_column(DateTime(timezone=True), nullable=True)
 
     session: Mapped[SessionRecord] = relationship("SessionRecord", back_populates="turns")
 
@@ -113,6 +120,9 @@ class StartSessionRequest(BaseModel):
     submission_id: str | None = None
     module_id: str | None = None
     attempt_number: int = 1
+    # Optional candidate subgroup metadata from the LMS (e.g. specialty, cohort, program).
+    # Stored on SessionRecord for future DIF / fairness analysis.
+    metadata: dict | None = None
 
 
 class StartSessionResponse(BaseModel):
