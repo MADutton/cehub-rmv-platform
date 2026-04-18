@@ -239,7 +239,9 @@ async def start_session(body: StartSessionRequest, db: AsyncSession = Depends(ge
             record = mm_loader.get_module_record(body.module_id)
         except FileNotFoundError:
             raise HTTPException(404, f"Module '{body.module_id}' not found")
-        prompts = await generate_prompts_for_module(body.module_id)
+        # Use pre-scripted prompts if available; fall back to dynamic generation
+        static_prompts = mm_loader.get_module_prompts(body.module_id)
+        prompts = static_prompts if static_prompts is not None else await generate_prompts_for_module(body.module_id)
         content_id = body.module_id
         submission_id = None
         opening = format_opening_mastery_module(record["module_title"])
@@ -344,18 +346,29 @@ async def respond(
                 next_followup = await decide_followup_assigned_case(
                     current_primary, body.response, available
                 )
-        else:
-            followup_rules = (
-                cb_loader.get_followup_rules()
-                if session.product_type == "case_based"
-                else mm_loader.get_followup_rules()
-            )
+        elif session.product_type == "case_based":
             fu_dict = await decide_followup_generated(
                 session.product_type, current_primary, body.response,
-                "", followup_rules, followups_used + 1,
+                "", cb_loader.get_followup_rules(), followups_used + 1,
             )
             if fu_dict:
                 next_followup = fu_dict
+        else:
+            # mastery_module: use pre-scripted followups if present, else generate
+            all_fus = current_primary.get("followups", [])
+            if all_fus:
+                available = [f for f in all_fus if f["followup_id"] not in used_ids]
+                if available:
+                    next_followup = await decide_followup_assigned_case(
+                        current_primary, body.response, available
+                    )
+            else:
+                fu_dict = await decide_followup_generated(
+                    session.product_type, current_primary, body.response,
+                    "", mm_loader.get_followup_rules(), followups_used + 1,
+                )
+                if fu_dict:
+                    next_followup = fu_dict
 
     if next_followup:
         fu_id = next_followup.get("followup_id")
@@ -375,8 +388,8 @@ async def respond(
         ))
         await db.commit()
         return PromptResponse(done=False, next_prompt=fu_text,
-                              phase=current_primary["phase_id"],
-                              prompt_id=fu_id, is_followup=True)
+            phase=current_primary["phase_id"],
+            prompt_id=fu_id, is_followup=True)
 
     next_index = primary_index + 1
     if next_index >= len(primary_prompts):
@@ -391,7 +404,7 @@ async def respond(
             "You will receive your results through the standard reporting process."
         )
         return PromptResponse(done=True, next_prompt=closing,
-                              phase=None, prompt_id=None, is_followup=False)
+            phase=None, prompt_id=None, is_followup=False)
 
     next_primary = primary_prompts[next_index]
     new_total = total_issued + 1
@@ -409,8 +422,8 @@ async def respond(
     ))
     await db.commit()
     return PromptResponse(done=False, next_prompt=next_primary["text"],
-                          phase=next_primary["phase_id"],
-                          prompt_id=next_primary["prompt_id"], is_followup=False)
+        phase=next_primary["phase_id"],
+        prompt_id=next_primary["prompt_id"], is_followup=False)
 
 
 @app.get("/sessions/{session_id}", response_model=SessionStateResponse)
@@ -449,8 +462,8 @@ async def get_result(session_id: str, db: AsyncSession = Depends(get_db)):
         raise HTTPException(400, "Session is still active")
     if session.status == "complete":
         return ResultResponse(session_id=session_id, product_type=session.product_type,
-                              status="scoring", result=None)
+            status="scoring", result=None)
     if session.result is None:
         raise HTTPException(500, "Session marked scored but result record missing")
     return ResultResponse(session_id=session_id, product_type=session.product_type,
-                          status="scored", result=session.result.result_data)
+        status="scored", result=session.result.result_data)

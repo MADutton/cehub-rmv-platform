@@ -68,6 +68,15 @@ def get_scoring_anchors(module_id: str) -> dict:
     return _j(os.path.join(_BASE, "modules", module_id, "scoring_anchors.json"))
 
 
+@lru_cache(maxsize=None)
+def get_module_prompts(module_id: str) -> list | None:
+    """Load pre-scripted prompts for a module if prompts.json exists. Returns None otherwise."""
+    path = os.path.join(_BASE, "modules", module_id, "prompts.json")
+    if not os.path.exists(path):
+        return None
+    return _j(path)
+
+
 def get_module_content(module_id: str) -> str:
     """Load transcript and curated notes for a module. Returns combined text."""
     module_dir = os.path.join(_BASE, "modules", module_id)
