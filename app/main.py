@@ -3,10 +3,12 @@ from __future__ import annotations
 import io
 import os
 import random
+import statistics
+from collections import defaultdict
 from contextlib import asynccontextmanager
 from datetime import datetime, timezone
 
-from fastapi import BackgroundTasks, Depends, FastAPI, File, Form, HTTPException, UploadFile
+from fastapi import BackgroundTasks, Depends, FastAPI, File, Form, HTTPException, Query, UploadFile
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import FileResponse
 from fastapi.staticfiles import StaticFiles
@@ -43,6 +45,15 @@ from app.models import (
     UploadSubmissionResponse,
 )
 from app.scorer import score_assigned_case, score_case_based, score_mastery_module
+
+_KNOWN_DOMAINS = [
+    "core_concept_understanding",
+    "clinical_application",
+    "prioritization_decision_making",
+    "justification",
+    "boundaries_uncertainty",
+    "mastery_depth",
+]
 
 
 def _extract_text(filename: str, content: bytes) -> str:
@@ -82,9 +93,15 @@ async def _score_background(session_id: str) -> None:
             duration = (completed_at - session.created_at).total_seconds() / 60
             turns_data = [
                 {
-                    "phase_id": t.phase_id, "prompt_id": t.prompt_id,
-                    "is_followup": t.is_followup, "prompt_text": t.prompt_text,
+                    "phase_id": t.phase_id,
+                    "prompt_id": t.prompt_id,
+                    "is_followup": t.is_followup,
+                    "prompt_text": t.prompt_text,
                     "response_text": t.response_text,
+                    "response_latency_seconds": (
+                        round((t.response_submitted_at - t.prompt_delivered_at).total_seconds(), 1)
+                        if t.response_submitted_at and t.prompt_delivered_at else None
+                    ),
                 }
                 for t in session.turns
             ]
@@ -239,7 +256,6 @@ async def start_session(body: StartSessionRequest, db: AsyncSession = Depends(ge
             record = mm_loader.get_module_record(body.module_id)
         except FileNotFoundError:
             raise HTTPException(404, f"Module '{body.module_id}' not found")
-        # Use pre-scripted prompts if available; fall back to dynamic generation
         static_prompts = mm_loader.get_module_prompts(body.module_id)
         prompts = static_prompts if static_prompts is not None else await generate_prompts_for_module(body.module_id)
         content_id = body.module_id
@@ -250,6 +266,7 @@ async def start_session(body: StartSessionRequest, db: AsyncSession = Depends(ge
     if not first_prompt:
         raise HTTPException(500, "No primary prompts in generated set")
 
+    now = datetime.now(timezone.utc)
     session = SessionRecord(
         product_type=pt,
         participant_id=body.participant_id,
@@ -257,6 +274,7 @@ async def start_session(body: StartSessionRequest, db: AsyncSession = Depends(ge
         submission_id=submission_id,
         attempt_number=body.attempt_number,
         prompts=prompts,
+        metadata=body.metadata,
         state={
             "primary_prompt_index": 0,
             "followups_used_count": 0,
@@ -266,10 +284,6 @@ async def start_session(body: StartSessionRequest, db: AsyncSession = Depends(ge
         },
     )
     db.add(session)
-    # Flush so SessionRecord.id (a Python-side column default) is populated
-    # before we reference it on the child TurnRecord. Without this, session.id
-    # is None at TurnRecord construction time and the child INSERT fails with
-    # NotNullViolationError on turns.session_id.
     await db.flush()
     db.add(TurnRecord(
         session_id=session.id,
@@ -278,6 +292,7 @@ async def start_session(body: StartSessionRequest, db: AsyncSession = Depends(ge
         prompt_id=first_prompt["prompt_id"],
         is_followup=False,
         prompt_text=first_prompt["text"],
+        prompt_delivered_at=now,
     ))
     await db.commit()
 
@@ -319,6 +334,7 @@ async def respond(
     if not current_turn:
         raise HTTPException(500, "No open turn found for current prompt")
     current_turn.response_text = body.response
+    current_turn.response_submitted_at = datetime.now(timezone.utc)
 
     if session.product_type == "assigned_case":
         product = ac_loader.get_exam_product()
@@ -354,7 +370,6 @@ async def respond(
             if fu_dict:
                 next_followup = fu_dict
         else:
-            # mastery_module: use pre-scripted followups if present, else generate
             all_fus = current_primary.get("followups", [])
             if all_fus:
                 available = [f for f in all_fus if f["followup_id"] not in used_ids]
@@ -369,6 +384,8 @@ async def respond(
                 )
                 if fu_dict:
                     next_followup = fu_dict
+
+    now = datetime.now(timezone.utc)
 
     if next_followup:
         fu_id = next_followup.get("followup_id")
@@ -385,6 +402,7 @@ async def respond(
             session_id=session_id, turn_number=new_total,
             phase_id=current_primary["phase_id"], prompt_id=fu_id,
             is_followup=True, prompt_text=fu_text,
+            prompt_delivered_at=now,
         ))
         await db.commit()
         return PromptResponse(done=False, next_prompt=fu_text,
@@ -419,6 +437,7 @@ async def respond(
         session_id=session_id, turn_number=new_total,
         phase_id=next_primary["phase_id"], prompt_id=next_primary["prompt_id"],
         is_followup=False, prompt_text=next_primary["text"],
+        prompt_delivered_at=now,
     ))
     await db.commit()
     return PromptResponse(done=False, next_prompt=next_primary["text"],
@@ -467,3 +486,113 @@ async def get_result(session_id: str, db: AsyncSession = Depends(get_db)):
         raise HTTPException(500, "Session marked scored but result record missing")
     return ResultResponse(session_id=session_id, product_type=session.product_type,
         status="scored", result=session.result.result_data)
+
+
+# ---------------------------------------------------------------------------
+# Analytics endpoint
+# ---------------------------------------------------------------------------
+# Aggregates domain scores, outcomes, confidence flags, and response latency
+# across scored sessions. Designed to feed reliability analysis, G-studies,
+# and AI-scoring validation workflows.
+
+def _safe_stats(values: list[float]) -> dict:
+    if not values:
+        return {"n": 0, "mean": None, "std": None, "min": None, "max": None}
+    n = len(values)
+    mean = sum(values) / n
+    std = statistics.stdev(values) if n > 1 else 0.0
+    return {"n": n, "mean": round(mean, 3), "std": round(std, 3),
+            "min": round(min(values), 3), "max": round(max(values), 3)}
+
+
+def _extract_domain_scores(result_data: dict) -> dict[str, float]:
+    """Extract the 6 known domain scores from result_data regardless of nesting."""
+    # Try common top-level keys first
+    for key in ("domains", "domain_scores", "scores", "section_scores"):
+        candidate = result_data.get(key)
+        if isinstance(candidate, dict):
+            found = {d: candidate[d] for d in _KNOWN_DOMAINS if d in candidate}
+            if found:
+                return found
+    # Fall back: look for domain names directly at the top level
+    return {d: result_data[d] for d in _KNOWN_DOMAINS if d in result_data}
+
+
+@app.get("/analytics")
+async def get_analytics(
+    product_type: str | None = Query(default=None),
+    content_id: str | None = Query(default=None),
+    db: AsyncSession = Depends(get_db),
+):
+    stmt = (
+        select(SessionRecord, ResultRecord)
+        .join(ResultRecord, ResultRecord.session_id == SessionRecord.id)
+        .options(selectinload(SessionRecord.turns))
+        .where(SessionRecord.status == "scored")
+    )
+    if product_type:
+        stmt = stmt.where(SessionRecord.product_type == product_type)
+    if content_id:
+        stmt = stmt.where(SessionRecord.content_id == content_id)
+
+    rows = (await db.execute(stmt)).all()
+
+    # Accumulate per content_id
+    buckets: dict[str, dict] = defaultdict(lambda: {
+        "n": 0,
+        "domain_scores": defaultdict(list),
+        "weighted_pcts": [],
+        "outcomes": defaultdict(int),
+        "review_required_count": 0,
+        "low_confidence_count": 0,
+        "latencies_seconds": [],
+    })
+
+    for session, result in rows:
+        rd = result.result_data
+        b = buckets[session.content_id]
+        b["n"] += 1
+
+        for domain, score in _extract_domain_scores(rd).items():
+            if isinstance(score, (int, float)):
+                b["domain_scores"][domain].append(float(score))
+
+        for pct_key in ("weighted_pct", "total_pct", "final_pct", "weighted_final_pct"):
+            val = rd.get(pct_key)
+            if isinstance(val, (int, float)):
+                b["weighted_pcts"].append(float(val))
+                break
+
+        outcome = rd.get("outcome") or rd.get("result") or "unknown"
+        b["outcomes"][str(outcome)] += 1
+
+        if rd.get("review_required"):
+            b["review_required_count"] += 1
+        if rd.get("scoring_confidence") in ("low", "medium"):
+            b["low_confidence_count"] += 1
+
+        for turn in session.turns:
+            if turn.response_submitted_at and turn.prompt_delivered_at:
+                latency = (turn.response_submitted_at - turn.prompt_delivered_at).total_seconds()
+                b["latencies_seconds"].append(latency)
+
+    summary = {}
+    for cid, b in buckets.items():
+        summary[cid] = {
+            "n_sessions": b["n"],
+            "domain_stats": {
+                domain: _safe_stats(scores)
+                for domain, scores in b["domain_scores"].items()
+            },
+            "weighted_pct_stats": _safe_stats(b["weighted_pcts"]),
+            "outcomes": dict(b["outcomes"]),
+            "review_required_count": b["review_required_count"],
+            "low_or_medium_confidence_count": b["low_confidence_count"],
+            "response_latency_stats": _safe_stats(b["latencies_seconds"]),
+        }
+
+    return {
+        "total_sessions": sum(b["n"] for b in buckets.values()),
+        "filters": {"product_type": product_type, "content_id": content_id},
+        "by_content_id": summary,
+    }
