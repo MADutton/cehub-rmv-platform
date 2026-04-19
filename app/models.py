@@ -4,7 +4,7 @@ import uuid
 from datetime import datetime, timezone
 from typing import Any
 
-from sqlalchemy import Boolean, DateTime, ForeignKey, Index, Integer, JSON, String, Text
+from sqlalchemy import Boolean, DateTime, Float, ForeignKey, Index, Integer, JSON, String, Text
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 from pydantic import BaseModel
 
@@ -101,6 +101,24 @@ class ResultRecord(Base):
     session: Mapped[SessionRecord] = relationship("SessionRecord", back_populates="result")
 
 
+class PanelistRatingRecord(Base):
+    """Stores Modified Angoff MCE ratings submitted by standard-setting panelists."""
+    __tablename__ = "panelist_ratings"
+    __table_args__ = (
+        Index("ix_panelist_ratings_exam_panelist_round", "exam_id", "panelist_id", "round_number"),
+    )
+
+    id: Mapped[str] = mapped_column(String(36), primary_key=True, default=_uuid)
+    exam_id: Mapped[str] = mapped_column(String(255), nullable=False)
+    panelist_id: Mapped[str] = mapped_column(String(255), nullable=False)
+    section_id: Mapped[str] = mapped_column(String(50), nullable=False)
+    domain: Mapped[str] = mapped_column(String(50), nullable=False)
+    mce_score: Mapped[float] = mapped_column(Float, nullable=False)
+    round_number: Mapped[int] = mapped_column(Integer, nullable=False, default=1)
+    rationale: Mapped[str | None] = mapped_column(Text, nullable=True)
+    created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), default=_now)
+
+
 # ---------------------------------------------------------------------------
 # Pydantic schemas
 # ---------------------------------------------------------------------------
@@ -163,3 +181,17 @@ class ResultResponse(BaseModel):
     product_type: str
     status: str
     result: dict[str, Any] | None = None
+
+
+class PanelistRatingItem(BaseModel):
+    section_id: str
+    domain: str
+    mce_score: float
+    rationale: str | None = None
+
+
+class SubmitPanelistRatingsRequest(BaseModel):
+    exam_id: str
+    panelist_id: str
+    round_number: int = 1
+    ratings: list[PanelistRatingItem]
