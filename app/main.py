@@ -12,7 +12,7 @@ from fastapi import BackgroundTasks, Depends, FastAPI, File, Form, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import FileResponse
 from fastapi.staticfiles import StaticFiles
-from sqlalchemy import select
+from sqlalchemy import delete, select
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy.orm import selectinload
 
@@ -32,6 +32,8 @@ from app.loaders import assigned_case as ac_loader
 from app.loaders import case_based as cb_loader
 from app.loaders import mastery_module as mm_loader
 from app.models import (
+    PanelistRatingItem,
+    PanelistRatingRecord,
     PromptResponse,
     ResultRecord,
     ResultResponse,
@@ -40,6 +42,7 @@ from app.models import (
     StartSessionRequest,
     StartSessionResponse,
     SubmissionRecord,
+    SubmitPanelistRatingsRequest,
     SubmitResponseRequest,
     TurnRecord,
     UploadSubmissionResponse,
@@ -54,6 +57,19 @@ _KNOWN_DOMAINS = [
     "boundaries_uncertainty",
     "mastery_depth",
 ]
+
+# Blueprint weights from standard_setting/rating_template.json — used to compute
+# the weighted recommended cut score from per-section MCE percentages.
+_SECTION_BLUEPRINT_WEIGHTS: dict[str, float] = {
+    "01_techniques": 0.2527,
+    "02_neuro": 0.1440,
+    "03_pharmacology": 0.1848,
+    "04_non_pharm": 0.1495,
+    "05_recognition_assessment": 0.2690,
+}
+_TOTAL_SECTIONS = len(_SECTION_BLUEPRINT_WEIGHTS)
+# Expected number of domain ratings per panelist per round (5 sections × 6 domains)
+_EXPECTED_CELLS = _TOTAL_SECTIONS * 6
 
 
 def _extract_text(filename: str, content: bytes) -> str:
@@ -595,4 +611,215 @@ async def get_analytics(
         "total_sessions": sum(b["n"] for b in buckets.values()),
         "filters": {"product_type": product_type, "content_id": content_id},
         "by_content_id": summary,
+    }
+
+
+# ---------------------------------------------------------------------------
+# Standard-setting endpoints (Modified Angoff)
+# ---------------------------------------------------------------------------
+# Supports multi-round Angoff panels. Panelists submit MCE scores (0–5, 0.5 step)
+# per section × domain cell. The summary endpoint computes the weighted cut score
+# and flags discrepant items for round-2 discussion.
+
+@app.post("/standard-setting/ratings", status_code=201)
+async def submit_panelist_ratings(
+    body: SubmitPanelistRatingsRequest,
+    db: AsyncSession = Depends(get_db),
+):
+    """Upsert a panelist's ratings for a given exam and round (delete + insert)."""
+    await db.execute(
+        delete(PanelistRatingRecord).where(
+            PanelistRatingRecord.exam_id == body.exam_id,
+            PanelistRatingRecord.panelist_id == body.panelist_id,
+            PanelistRatingRecord.round_number == body.round_number,
+        )
+    )
+    for item in body.ratings:
+        db.add(PanelistRatingRecord(
+            exam_id=body.exam_id,
+            panelist_id=body.panelist_id,
+            section_id=item.section_id,
+            domain=item.domain,
+            mce_score=item.mce_score,
+            round_number=body.round_number,
+            rationale=item.rationale,
+        ))
+    await db.commit()
+    return {"status": "ok", "cells_saved": len(body.ratings)}
+
+
+@app.get("/standard-setting/ratings/{panelist_id}")
+async def get_panelist_ratings(
+    panelist_id: str,
+    exam_id: str = Query(...),
+    round_number: int = Query(default=1),
+    db: AsyncSession = Depends(get_db),
+):
+    """Return all ratings a panelist has submitted, plus a completion flag."""
+    res = await db.execute(
+        select(PanelistRatingRecord).where(
+            PanelistRatingRecord.panelist_id == panelist_id,
+            PanelistRatingRecord.exam_id == exam_id,
+            PanelistRatingRecord.round_number == round_number,
+        )
+    )
+    rows = res.scalars().all()
+    ratings = [
+        {
+            "section_id": r.section_id,
+            "domain": r.domain,
+            "mce_score": r.mce_score,
+            "rationale": r.rationale,
+        }
+        for r in rows
+    ]
+    return {
+        "panelist_id": panelist_id,
+        "exam_id": exam_id,
+        "round_number": round_number,
+        "ratings": ratings,
+        "complete": len(ratings) >= _EXPECTED_CELLS,
+    }
+
+
+@app.get("/standard-setting/summary")
+async def get_standard_setting_summary(
+    exam_id: str = Query(...),
+    round_number: int = Query(default=1),
+    discrepancy_threshold_sd: float = Query(default=1.0),
+    db: AsyncSession = Depends(get_db),
+):
+    """
+    Compute the Modified Angoff cut score summary for an exam round.
+
+    Returns per-cell statistics, per-section MCE%, weighted recommended cut,
+    95% CI across panelists, discrepant items, and panelist completion.
+    """
+    res = await db.execute(
+        select(PanelistRatingRecord).where(
+            PanelistRatingRecord.exam_id == exam_id,
+            PanelistRatingRecord.round_number == round_number,
+        )
+    )
+    rows = res.scalars().all()
+
+    if not rows:
+        return {
+            "exam_id": exam_id,
+            "round_number": round_number,
+            "n_panelists": 0,
+            "recommended_cut_pct": None,
+            "ci_95": None,
+            "per_section": {},
+            "discrepant_items": [],
+            "panelist_completion": {},
+        }
+
+    # Index ratings by (section_id, domain) → list of scores
+    cell_scores: dict[tuple[str, str], list[float]] = defaultdict(list)
+    panelist_ids: set[str] = set()
+    # panelist → list of mce_scores (for computing per-panelist cut)
+    panelist_cells: dict[str, list[tuple[str, str, float]]] = defaultdict(list)
+
+    for r in rows:
+        cell_scores[(r.section_id, r.domain)].append(r.mce_score)
+        panelist_ids.add(r.panelist_id)
+        panelist_cells[r.panelist_id].append((r.section_id, r.domain, r.mce_score))
+
+    # Per-cell stats
+    cell_stats: dict[tuple[str, str], dict] = {}
+    for cell, scores in cell_scores.items():
+        n = len(scores)
+        mean = sum(scores) / n
+        std = statistics.stdev(scores) if n > 1 else 0.0
+        cell_stats[cell] = {"mean": round(mean, 3), "std": round(std, 3), "n": n}
+
+    # Per-section MCE% (mean of all cell means in section, as % of max score 5.0)
+    section_cell_means: dict[str, list[float]] = defaultdict(list)
+    for (section_id, domain), stats in cell_stats.items():
+        section_cell_means[section_id].append(stats["mean"])
+
+    per_section: dict[str, dict] = {}
+    for section_id, means in section_cell_means.items():
+        section_mean_score = sum(means) / len(means)
+        mce_pct = round((section_mean_score / 5.0) * 100, 2)
+        per_section[section_id] = {
+            "mce_score_mean": round(section_mean_score, 3),
+            "mce_pct": mce_pct,
+            "n_cells": len(means),
+            "cell_stats": {
+                domain: cell_stats[(section_id, domain)]
+                for (sid, domain) in cell_stats
+                if sid == section_id
+            },
+        }
+
+    # Recommended cut: blueprint-weighted sum of section MCE%s
+    weighted_cut_pct = sum(
+        per_section[sid]["mce_pct"] * weight
+        for sid, weight in _SECTION_BLUEPRINT_WEIGHTS.items()
+        if sid in per_section
+    )
+
+    # Per-panelist cut scores for CI computation
+    panelist_cuts: list[float] = []
+    for pid, cells in panelist_cells.items():
+        # Compute weighted cut for this panelist
+        p_section_scores: dict[str, list[float]] = defaultdict(list)
+        for section_id, domain, score in cells:
+            p_section_scores[section_id].append(score)
+        p_cut = sum(
+            (sum(scores) / len(scores) / 5.0 * 100) * weight
+            for section_id, weight in _SECTION_BLUEPRINT_WEIGHTS.items()
+            if (scores := p_section_scores.get(section_id))
+        )
+        panelist_cuts.append(p_cut)
+
+    n_panelists = len(panelist_cuts)
+    if n_panelists > 1:
+        cut_sd = statistics.stdev(panelist_cuts)
+        margin = 1.96 * cut_sd / (n_panelists ** 0.5)
+        ci_95 = {
+            "lower": round(weighted_cut_pct - margin, 2),
+            "upper": round(weighted_cut_pct + margin, 2),
+        }
+    else:
+        ci_95 = None
+
+    # Discrepant items: cells where SD >= threshold
+    discrepant_items = [
+        {
+            "section_id": section_id,
+            "domain": domain,
+            "mean": stats["mean"],
+            "std": stats["std"],
+            "n": stats["n"],
+        }
+        for (section_id, domain), stats in cell_stats.items()
+        if stats["std"] >= discrepancy_threshold_sd
+    ]
+    discrepant_items.sort(key=lambda x: x["std"], reverse=True)
+
+    # Panelist completion
+    panelist_completion = {
+        pid: {
+            "cells_submitted": len(cells),
+            "complete": len(cells) >= _EXPECTED_CELLS,
+        }
+        for pid, cells in panelist_cells.items()
+    }
+
+    return {
+        "exam_id": exam_id,
+        "round_number": round_number,
+        "n_panelists": n_panelists,
+        "recommended_cut_pct": round(weighted_cut_pct, 2),
+        "ci_95": ci_95,
+        "per_section": per_section,
+        "discrepant_items": discrepant_items,
+        "panelist_completion": panelist_completion,
+        "panelist_cuts": {
+            pid: round(cut, 2)
+            for pid, cut in zip(panelist_cells.keys(), panelist_cuts)
+        },
     }
