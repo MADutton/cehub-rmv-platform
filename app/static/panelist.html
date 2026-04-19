@@ -1,0 +1,435 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>RMV Standard Setting — Panelist Rating Tool</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: system-ui, sans-serif; background: #f5f7fa; color: #1a1a2e; min-height: 100vh; }
+  header { background: #1a1a2e; color: #fff; padding: 1rem 2rem; display: flex; align-items: center; gap: 1rem; }
+  header h1 { font-size: 1.1rem; font-weight: 600; }
+  header span { font-size: 0.8rem; opacity: 0.7; }
+  .container { max-width: 900px; margin: 2rem auto; padding: 0 1rem; }
+  .card { background: #fff; border-radius: 8px; box-shadow: 0 1px 4px rgba(0,0,0,.08); padding: 1.5rem; margin-bottom: 1.5rem; }
+  .card h2 { font-size: 1rem; font-weight: 600; margin-bottom: 1rem; color: #1a1a2e; border-bottom: 2px solid #e8eaf0; padding-bottom: .5rem; }
+  label { display: block; font-size: .85rem; font-weight: 500; margin-bottom: .3rem; color: #444; }
+  input, select { width: 100%; padding: .55rem .75rem; border: 1px solid #d0d5dd; border-radius: 6px; font-size: .9rem; }
+  input:focus, select:focus { outline: 2px solid #4f6ef7; outline-offset: -1px; }
+  .btn { display: inline-block; padding: .6rem 1.4rem; border: none; border-radius: 6px; font-size: .9rem; font-weight: 600; cursor: pointer; transition: opacity .15s; }
+  .btn:hover { opacity: .88; }
+  .btn-primary { background: #4f6ef7; color: #fff; }
+  .btn-success { background: #27ae60; color: #fff; }
+  .btn-outline { background: #fff; color: #4f6ef7; border: 1.5px solid #4f6ef7; }
+  .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom: 1rem; }
+  .form-row.three { grid-template-columns: 1fr 1fr 1fr; }
+  /* Tabs */
+  .tabs { display: flex; gap: .4rem; margin-bottom: 1rem; flex-wrap: wrap; }
+  .tab { padding: .45rem 1rem; border-radius: 6px; font-size: .85rem; font-weight: 500; cursor: pointer; background: #e8eaf0; color: #555; border: none; }
+  .tab.active { background: #4f6ef7; color: #fff; }
+  .tab.done { background: #d4edda; color: #155724; }
+  /* Domain sliders */
+  .domain-row { display: grid; grid-template-columns: 1fr 2fr 60px; align-items: center; gap: 1rem; padding: .6rem 0; border-bottom: 1px solid #f0f0f0; }
+  .domain-row:last-child { border-bottom: none; }
+  .domain-label { font-size: .82rem; color: #333; }
+  .domain-label small { display: block; color: #888; font-size: .72rem; margin-top: 2px; }
+  input[type=range] { -webkit-appearance: none; appearance: none; height: 5px; border-radius: 4px; background: #d0d5dd; outline: none; }
+  input[type=range]::-webkit-slider-thumb { -webkit-appearance: none; width: 18px; height: 18px; border-radius: 50%; background: #4f6ef7; cursor: pointer; }
+  .score-display { font-weight: 700; font-size: 1.1rem; color: #4f6ef7; text-align: right; }
+  .section-footer { margin-top: 1rem; display: flex; align-items: center; gap: 1rem; }
+  /* Summary */
+  .stat-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); gap: 1rem; margin-bottom: 1.5rem; }
+  .stat-box { background: #f5f7fa; border-radius: 8px; padding: 1rem; text-align: center; }
+  .stat-box .value { font-size: 1.8rem; font-weight: 700; color: #4f6ef7; }
+  .stat-box .label { font-size: .78rem; color: #666; margin-top: .2rem; }
+  .cut-hero { background: linear-gradient(135deg, #4f6ef7, #7c3aed); color: #fff; border-radius: 10px; padding: 2rem; text-align: center; margin-bottom: 1.5rem; }
+  .cut-hero .big { font-size: 3.5rem; font-weight: 800; }
+  .cut-hero .sub { opacity: .85; font-size: .9rem; margin-top: .4rem; }
+  table { width: 100%; border-collapse: collapse; font-size: .85rem; }
+  th { background: #f5f7fa; text-align: left; padding: .5rem .75rem; font-weight: 600; }
+  td { padding: .45rem .75rem; border-bottom: 1px solid #eee; }
+  tr:last-child td { border-bottom: none; }
+  .badge { display: inline-block; padding: .15rem .5rem; border-radius: 20px; font-size: .75rem; font-weight: 600; }
+  .badge-green { background: #d4edda; color: #155724; }
+  .badge-red { background: #f8d7da; color: #721c24; }
+  .badge-yellow { background: #fff3cd; color: #856404; }
+  .alert { padding: .75rem 1rem; border-radius: 6px; margin-bottom: 1rem; font-size: .9rem; }
+  .alert-info { background: #d1ecf1; color: #0c5460; }
+  .alert-success { background: #d4edda; color: #155724; }
+  .alert-warning { background: #fff3cd; color: #856404; }
+  .alert-danger { background: #f8d7da; color: #721c24; }
+  .hidden { display: none !important; }
+  .progress-bar { height: 6px; background: #e8eaf0; border-radius: 3px; margin-top: .3rem; }
+  .progress-bar-fill { height: 100%; border-radius: 3px; background: #4f6ef7; transition: width .4s; }
+</style>
+</head>
+<body>
+<header>
+  <h1>RMV Standard Setting</h1>
+  <span>Modified Angoff Panelist Rating Tool</span>
+</header>
+
+<div class="container">
+  <!-- Setup Panel -->
+  <div id="panel-setup" class="card">
+    <h2>Session Setup</h2>
+    <div class="alert alert-info">
+      Rate each domain using the 0–5 scale (0.5 steps). Your score represents the
+      <strong>Minimum Competency Estimate (MCE)</strong>: the score you would expect a
+      minimally competent entry-level veterinary acupuncturist to achieve.
+    </div>
+    <div class="form-row three">
+      <div>
+        <label for="inp-panelist">Panelist ID</label>
+        <input type="text" id="inp-panelist" placeholder="e.g. P01">
+      </div>
+      <div>
+        <label for="inp-exam">Exam ID</label>
+        <input type="text" id="inp-exam" placeholder="e.g. CAPM-2025-A">
+      </div>
+      <div>
+        <label for="inp-round">Round</label>
+        <select id="inp-round">
+          <option value="1">Round 1</option>
+          <option value="2">Round 2</option>
+        </select>
+      </div>
+    </div>
+    <button class="btn btn-primary" onclick="startSession()">Begin Rating</button>
+    <div id="setup-msg" class="alert hidden" style="margin-top:1rem;"></div>
+  </div>
+
+  <!-- Rating Panel -->
+  <div id="panel-rating" class="hidden">
+    <div class="card">
+      <h2>Section Ratings <span id="progress-label" style="font-weight:400;font-size:.85rem;color:#666;"></span></h2>
+      <div class="progress-bar"><div class="progress-bar-fill" id="progress-fill" style="width:0%"></div></div>
+      <div class="tabs" id="section-tabs" style="margin-top:1rem;"></div>
+      <div id="section-content"></div>
+    </div>
+  </div>
+
+  <!-- Summary Panel -->
+  <div id="panel-summary" class="hidden">
+    <div id="summary-loading" class="card"><p>Loading summary…</p></div>
+    <div id="summary-content" class="hidden"></div>
+  </div>
+</div>
+
+<script>
+// ─── Data ────────────────────────────────────────────────────────────────────
+const SECTIONS = [
+  {
+    id: "01_techniques",
+    label: "Acupuncture Techniques",
+    weight: 0.2527,
+    domains: [
+      { id: "point_location", label: "Point Location", desc: "Accuracy of traditional & anatomical point identification" },
+      { id: "needling_technique", label: "Needling Technique", desc: "Insertion angle, depth, stimulation method" },
+      { id: "treatment_planning", label: "Treatment Planning", desc: "Protocol selection for case presentation" },
+      { id: "safety_procedures", label: "Safety Procedures", desc: "Sterile technique, contraindications, adverse event response" },
+      { id: "equipment_selection", label: "Equipment Selection", desc: "Needle gauge, length, adjunctive modality choices" },
+      { id: "documentation", label: "Documentation", desc: "SOAP note quality, treatment record accuracy" },
+    ],
+  },
+  {
+    id: "02_neuro",
+    label: "Neuroanatomy & Physiology",
+    weight: 0.1440,
+    domains: [
+      { id: "peripheral_nervous_system", label: "Peripheral Nervous System", desc: "Nerve pathways relevant to acupuncture analgesia" },
+      { id: "central_mechanisms", label: "Central Mechanisms", desc: "Spinal cord, brain stem, cortical processing" },
+      { id: "autonomic_function", label: "Autonomic Function", desc: "Sympathetic/parasympathetic regulation via acupuncture" },
+      { id: "pain_pathways", label: "Pain Pathways", desc: "Nociception, gate theory, endorphin release" },
+      { id: "species_variation", label: "Species Variation", desc: "Neuroanatomical differences across veterinary species" },
+      { id: "applied_anatomy", label: "Applied Anatomy", desc: "Muscle, fascia, and myofascial trigger points" },
+    ],
+  },
+  {
+    id: "03_pharmacology",
+    label: "Pharmacology Integration",
+    weight: 0.1848,
+    domains: [
+      { id: "analgesic_interactions", label: "Analgesic Interactions", desc: "Opioid, NSAID, and acupuncture synergy/antagonism" },
+      { id: "sedation_protocols", label: "Sedation Protocols", desc: "Appropriate sedation for acupuncture procedures" },
+      { id: "contraindicated_drugs", label: "Contraindicated Drugs", desc: "Medications that alter acupuncture response" },
+      { id: "herbal_integration", label: "Herbal Integration", desc: "Chinese herbal medicine and drug interactions" },
+      { id: "dosing_adjustment", label: "Dosing Adjustment", desc: "Modifying conventional doses during acupuncture care" },
+      { id: "adverse_drug_events", label: "Adverse Drug Events", desc: "Recognition and management of drug-related complications" },
+    ],
+  },
+  {
+    id: "04_non_pharm",
+    label: "Non-Pharmacological Therapies",
+    weight: 0.1495,
+    domains: [
+      { id: "rehabilitation", label: "Rehabilitation", desc: "Physical therapy modalities complementing acupuncture" },
+      { id: "laser_therapy", label: "Laser Therapy", desc: "Photobiomodulation parameters and indications" },
+      { id: "chiropractic", label: "Chiropractic / Manipulation", desc: "Spinal manipulation integration and contraindications" },
+      { id: "nutrition", label: "Nutrition", desc: "Dietary support for musculoskeletal and pain conditions" },
+      { id: "environmental_modification", label: "Environmental Modification", desc: "Home care recommendations and quality-of-life optimization" },
+      { id: "client_education", label: "Client Education", desc: "Communicating integrative care plans effectively" },
+    ],
+  },
+  {
+    id: "05_recognition_assessment",
+    label: "Clinical Recognition & Assessment",
+    weight: 0.2690,
+    domains: [
+      { id: "case_presentation", label: "Case Presentation", desc: "History taking and chief complaint identification" },
+      { id: "physical_exam", label: "Physical Examination", desc: "TCVM and conventional exam integration" },
+      { id: "differential_diagnosis", label: "Differential Diagnosis", desc: "Generating and prioritizing differentials" },
+      { id: "diagnostic_selection", label: "Diagnostic Selection", desc: "Appropriate diagnostics to confirm diagnosis" },
+      { id: "prognosis", label: "Prognosis", desc: "Realistic outcome communication to clients" },
+      { id: "outcome_monitoring", label: "Outcome Monitoring", desc: "Re-assessment criteria and treatment modification triggers" },
+    ],
+  },
+];
+
+// ─── State ───────────────────────────────────────────────────────────────────
+let panelistId = "", examId = "", roundNumber = 1;
+// ratings[sectionId][domainId] = { score, rationale }
+const ratings = {};
+const sectionDone = {};
+SECTIONS.forEach(s => {
+  ratings[s.id] = {};
+  s.domains.forEach(d => { ratings[s.id][d.id] = { score: 2.5, rationale: "" }; });
+  sectionDone[s.id] = false;
+});
+let currentSection = SECTIONS[0].id;
+
+// ─── Setup ───────────────────────────────────────────────────────────────────
+function startSession() {
+  panelistId = document.getElementById("inp-panelist").value.trim();
+  examId = document.getElementById("inp-exam").value.trim();
+  roundNumber = parseInt(document.getElementById("inp-round").value);
+  const msg = document.getElementById("setup-msg");
+  if (!panelistId || !examId) {
+    showMsg(msg, "Please enter both Panelist ID and Exam ID.", "danger");
+    return;
+  }
+  document.getElementById("panel-setup").classList.add("hidden");
+  document.getElementById("panel-rating").classList.remove("hidden");
+  buildTabs();
+  renderSection(currentSection);
+}
+
+// ─── Tabs ────────────────────────────────────────────────────────────────────
+function buildTabs() {
+  const container = document.getElementById("section-tabs");
+  container.innerHTML = "";
+  SECTIONS.forEach(s => {
+    const btn = document.createElement("button");
+    btn.className = "tab" + (s.id === currentSection ? " active" : "") + (sectionDone[s.id] ? " done" : "");
+    btn.textContent = s.label;
+    btn.dataset.sid = s.id;
+    btn.onclick = () => switchSection(s.id);
+    container.appendChild(btn);
+  });
+  updateProgress();
+}
+
+function switchSection(sid) {
+  currentSection = sid;
+  buildTabs();
+  renderSection(sid);
+}
+
+function updateProgress() {
+  const done = SECTIONS.filter(s => sectionDone[s.id]).length;
+  const pct = Math.round((done / SECTIONS.length) * 100);
+  document.getElementById("progress-fill").style.width = pct + "%";
+  document.getElementById("progress-label").textContent = `${done}/${SECTIONS.length} sections complete`;
+}
+
+// ─── Section Renderer ────────────────────────────────────────────────────────
+function renderSection(sid) {
+  const section = SECTIONS.find(s => s.id === sid);
+  const content = document.getElementById("section-content");
+  let html = `<p style="font-size:.82rem;color:#666;margin-bottom:1rem;">
+    Blueprint weight: <strong>${(section.weight * 100).toFixed(1)}%</strong>
+  </p>`;
+
+  section.domains.forEach(d => {
+    const val = ratings[sid][d.id].score;
+    html += `
+    <div class="domain-row">
+      <div class="domain-label">${d.label}<small>${d.desc}</small></div>
+      <input type="range" min="0" max="5" step="0.5" value="${val}"
+        id="slider-${sid}-${d.id}"
+        oninput="updateScore('${sid}','${d.id}',this.value)">
+      <div class="score-display" id="val-${sid}-${d.id}">${val}</div>
+    </div>`;
+  });
+
+  html += `<div class="section-footer">
+    <button class="btn btn-success" onclick="submitSection('${sid}')">Save Section</button>
+    ${sectionDone[sid] ? '<span class="badge badge-green">&#10003; Saved</span>' : ''}
+  </div>
+  <div id="section-msg-${sid}" class="alert hidden" style="margin-top:.75rem;"></div>`;
+
+  content.innerHTML = html;
+}
+
+function updateScore(sid, did, val) {
+  ratings[sid][did].score = parseFloat(val);
+  document.getElementById(`val-${sid}-${did}`).textContent = parseFloat(val).toFixed(1);
+}
+
+// ─── Save Section ────────────────────────────────────────────────────────────
+async function submitSection(sid) {
+  const section = SECTIONS.find(s => s.id === sid);
+  const ratingItems = section.domains.map(d => ({
+    section_id: sid,
+    domain: d.id,
+    mce_score: ratings[sid][d.id].score,
+    rationale: ratings[sid][d.id].rationale || null,
+  }));
+
+  const payload = {
+    exam_id: examId,
+    panelist_id: panelistId,
+    round_number: roundNumber,
+    ratings: ratingItems,
+  };
+
+  const msg = document.getElementById(`section-msg-${sid}`);
+  showMsg(msg, "Saving…", "info");
+
+  try {
+    const res = await fetch("/standard-setting/ratings", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(payload),
+    });
+    if (!res.ok) throw new Error(`Server error ${res.status}`);
+    sectionDone[sid] = true;
+    showMsg(msg, `Section saved (${ratingItems.length} cells).`, "success");
+    buildTabs();
+    renderSection(sid);
+    checkAllDone();
+  } catch (e) {
+    showMsg(msg, "Save failed: " + e.message, "danger");
+  }
+}
+
+function checkAllDone() {
+  const allDone = SECTIONS.every(s => sectionDone[s.id]);
+  if (allDone) {
+    document.getElementById("panel-rating").classList.add("hidden");
+    document.getElementById("panel-summary").classList.remove("hidden");
+    loadSummary();
+  }
+}
+
+// ─── Summary ─────────────────────────────────────────────────────────────────
+async function loadSummary() {
+  document.getElementById("summary-loading").classList.remove("hidden");
+  document.getElementById("summary-content").classList.add("hidden");
+  try {
+    const url = `/standard-setting/summary?exam_id=${encodeURIComponent(examId)}&round_number=${roundNumber}`;
+    const res = await fetch(url);
+    if (!res.ok) throw new Error(`Server error ${res.status}`);
+    const data = await res.json();
+    renderSummary(data);
+  } catch (e) {
+    document.getElementById("summary-loading").innerHTML =
+      `<div class="alert alert-danger">Failed to load summary: ${e.message}</div>`;
+  }
+}
+
+function renderSummary(data) {
+  document.getElementById("summary-loading").classList.add("hidden");
+  const el = document.getElementById("summary-content");
+  el.classList.remove("hidden");
+
+  const cut = data.recommended_cut_pct ?? "—";
+  const ci = data.ci_95 ? `${data.ci_95.lower}% – ${data.ci_95.upper}%` : "N/A (need ≥2 panelists)";
+  const threshold = 70;
+  const delta = data.recommended_cut_pct != null ? (data.recommended_cut_pct - threshold).toFixed(2) : null;
+  const deltaStr = delta != null
+    ? `${delta >= 0 ? "+" : ""}${delta}% vs current ${threshold}% threshold`
+    : "";
+
+  // Section stats
+  let sectionBoxes = "";
+  SECTIONS.forEach(s => {
+    const sec = data.per_section?.[s.id];
+    const pct = sec ? sec.mce_pct.toFixed(1) : "—";
+    sectionBoxes += `<div class="stat-box">
+      <div class="value">${pct}%</div>
+      <div class="label">${s.label}</div>
+    </div>`;
+  });
+
+  // Discrepant items table
+  let discTable = "";
+  if (data.discrepant_items?.length) {
+    const rows = data.discrepant_items.map(d =>
+      `<tr>
+        <td>${d.section_id}</td><td>${d.domain}</td>
+        <td>${d.mean.toFixed(2)}</td><td>${d.std.toFixed(2)}</td>
+        <td>${d.n}</td>
+        <td><span class="badge badge-yellow">Review</span></td>
+      </tr>`
+    ).join("");
+    discTable = `<div class="card">
+      <h2>Discrepant Items (SD ≥ 1.0) — Requires Round 2 Discussion</h2>
+      <table><thead><tr>
+        <th>Section</th><th>Domain</th><th>Mean</th><th>SD</th><th>N</th><th>Status</th>
+      </tr></thead><tbody>${rows}</tbody></table>
+    </div>`;
+  } else {
+    discTable = `<div class="card">
+      <h2>Discrepant Items</h2>
+      <div class="alert alert-success">No discrepant items (all SDs &lt; 1.0). Consensus reached.</div>
+    </div>`;
+  }
+
+  // Panelist completion table
+  const compRows = Object.entries(data.panelist_completion ?? {}).map(([pid, info]) =>
+    `<tr>
+      <td>${pid}</td>
+      <td>${info.cells_submitted} / 30</td>
+      <td>${data.panelist_cuts?.[pid] != null ? data.panelist_cuts[pid].toFixed(1) + "%" : "—"}</td>
+      <td><span class="badge ${info.complete ? "badge-green" : "badge-red"}">${info.complete ? "Complete" : "Incomplete"}</span></td>
+    </tr>`
+  ).join("");
+
+  el.innerHTML = `
+    <div class="cut-hero">
+      <div style="font-size:.9rem;opacity:.8;margin-bottom:.5rem;">RECOMMENDED CUT SCORE</div>
+      <div class="big">${cut}%</div>
+      <div class="sub">95% CI: ${ci}</div>
+      ${deltaStr ? `<div class="sub" style="margin-top:.4rem;">${deltaStr}</div>` : ""}
+    </div>
+
+    <div class="card">
+      <h2>Per-Section MCE%</h2>
+      <div class="stat-grid">${sectionBoxes}</div>
+    </div>
+
+    ${discTable}
+
+    <div class="card">
+      <h2>Panelist Completion</h2>
+      <table><thead><tr>
+        <th>Panelist</th><th>Cells Submitted</th><th>Individual Cut</th><th>Status</th>
+      </tr></thead><tbody>${compRows || "<tr><td colspan='4'>No data</td></tr>"}</tbody></table>
+    </div>
+
+    <div style="text-align:center;margin-top:1.5rem;">
+      <button class="btn btn-outline" onclick="location.reload()">Start New Session</button>
+    </div>
+  `;
+}
+
+// ─── Helpers ─────────────────────────────────────────────────────────────────
+function showMsg(el, text, type) {
+  el.className = `alert alert-${type}`;
+  el.textContent = text;
+  el.classList.remove("hidden");
+}
+</script>
+</body>
+</html>
